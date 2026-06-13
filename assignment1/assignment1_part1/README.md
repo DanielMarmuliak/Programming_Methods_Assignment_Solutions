@@ -1,4 +1,4 @@
-To run the code from the file assignment.cpp, enter the following command in the terminal:
+To run the code from the file assignment1.cpp, enter the following command in the terminal:
 
 cat input.txt | ./result.exe
 
