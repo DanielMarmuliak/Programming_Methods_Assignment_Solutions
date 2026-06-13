@@ -1,0 +1,17 @@
+ONP: error
+INF: a+b+~a-a
+ONP: ab+a~a-+
+ONP: xa~~bc*+=
+ONP: ta~x<b~<=
+ONP: error
+ONP: error
+ONP: xa~b*c/d-ef~%+=
+INF: x=a+b+c+d+e+f+g
+INF: a+b+c+d+e+f+g
+INF: a+b+c+d+e+f+g
+INF: error
+ONP: xabc===
+INF: x=(a=(b=c))
+ONP: xabc^^=
+ONP: xabcde^^===
+INF: x=(a=(b=c^d^e))
