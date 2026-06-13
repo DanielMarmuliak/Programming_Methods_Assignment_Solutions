@@ -1,22 +1,22 @@
-# Program 01 — Ogólny problem plecakowy
+# Program 01 — General Knapsack Problem
 
-## 1. Cel programu
+## 1. Program Objective
 
-Celem programu jest rozwiązanie **ogólnego problemu plecakowego** przy użyciu **programowania dynamicznego**.
+The objective of the program is to solve the **general knapsack problem** using **dynamic programming**.
 
-Program wybiera takie przedmioty, aby:
+The program selects items in such a way that:
 
-- całkowita masa przedmiotów nie przekroczyła pojemności plecaka,
-- całkowita wartość przedmiotów była jak największa,
-- każdy typ przedmiotu mógł zostać użyty dowolną liczbę razy.
+* the total mass of the items does not exceed the backpack capacity,
+* the total value of the items is as large as possible,
+* each type of item can be used any number of times.
 
-Oznacza to, że jest to wersja problemu plecakowego typu **unbounded knapsack**, czyli problem plecakowy z nieograniczoną liczbą kopii każdego przedmiotu.
+This means that this is the **unbounded knapsack** version of the problem, where each item can have an unlimited number of copies.
 
 ---
 
-## 2. Struktura projektu
+## 2. Project Structure
 
-Program został podzielony na kilka plików tematycznych:
+The program was divided into several thematic files:
 
 ```text
 main.cpp
@@ -26,17 +26,17 @@ knapsack.cpp
 input.txt
 ```
 
-Taki podział ułatwia czytelność programu i rozdziela odpowiedzialności poszczególnych części kodu.
+This division improves program readability and separates the responsibilities of individual parts of the code.
 
 ---
 
-## 3. Opis plików
+## 3. File Description
 
-### `item.h`
+### `items.h`
 
-Plik `items.h` zawiera definicję struktury `Item`.
+The `items.h` file contains the definition of the `Item` structure.
 
-Struktura przechowuje informacje o jednym przedmiocie:
+The structure stores information about one item:
 
 ```cpp
 std::string name;
@@ -44,43 +44,43 @@ int mass;
 int value;
 ```
 
-Znaczenie pól:
+Meaning of the fields:
 
-- `name` — nazwa przedmiotu,
-- `mass` — masa przedmiotu,
-- `value` — wartość przedmiotu.
+* `name` — item name,
+* `mass` — item mass,
+* `value` — item value.
 
-W tym pliku znajdują się również deklaracje oraz definicje konstruktorów struktury `Item`.
+This file also contains declarations and definitions of the `Item` structure constructors.
 
-Konstruktor domyślny tworzy pusty przedmiot:
+The default constructor creates an empty item:
 
 ```cpp
 Item::Item()
 ```
 
-Konstruktor z parametrami tworzy przedmiot na podstawie podanej nazwy, masy i wartości:
+The parameterized constructor creates an item based on the given name, mass, and value:
 
 ```cpp
 Item::Item(std::string itemName, int itemMass, int itemValue)
 ```
 
-Dzięki temu w programie można łatwo tworzyć obiekty reprezentujące przedmioty wczytane z pliku.
+Thanks to this, objects representing items read from the file can be easily created in the program.
 
 ---
 
 ### `knapsack.h`
 
-Plik `knapsack.h` zawiera deklarację klasy `Knapsack`.
+The `knapsack.h` file contains the declaration of the `Knapsack` class.
 
-Klasa ta odpowiada za:
+This class is responsible for:
 
-- przechowywanie pojemności plecaka,
-- przechowywanie listy przedmiotów,
-- utworzenie tablic dynamicznych `P` i `Q`,
-- rozwiązanie problemu plecakowego,
-- wypisanie wyników.
+* storing the backpack capacity,
+* storing the list of items,
+* creating the dynamic arrays `P` and `Q`,
+* solving the knapsack problem,
+* printing the results.
 
-Najważniejsze pola klasy:
+The most important class fields are:
 
 ```cpp
 int capacity;
@@ -89,54 +89,54 @@ std::vector<std::vector<int>> P;
 std::vector<std::vector<int>> Q;
 ```
 
-Znaczenie tablic:
+Meaning of the arrays:
 
-- `P[i][j]` — najlepsza możliwa wartość plecaka o pojemności `j`, gdy można używać pierwszych `i` typów przedmiotów,
-- `Q[i][j]` — numer przedmiotu wybranego w ostatnim kroku dla wartości zapisanej w `P[i][j]`.
+* `P[i][j]` — the best possible value of a backpack with capacity `j` when the first `i` item types can be used,
+* `Q[i][j]` — the number of the item selected in the last step for the value stored in `P[i][j]`.
 
 ---
 
 ### `knapsack.cpp`
 
-Plik `knapsack.cpp` zawiera definicje metod klasy `Knapsack`.
+The `knapsack.cpp` file contains the definitions of the `Knapsack` class methods.
 
-To tutaj znajduje się główny algorytm programowania dynamicznego, funkcje służące do wypisywania danych z tablic `P` i `Q`, funkcja wypisująca wszystkie przedmioty z ich wartościami oraz funkcja, która wypisuje największą uzyskaną wartość.
+This is where the main dynamic programming algorithm is located, as well as the functions used to print data from the `P` and `Q` arrays, the function that prints all items with their values, and the function that prints the highest obtained value.
 
 ---
 
 ### `main.cpp`
 
-Plik `main.cpp` odpowiada za uruchomienie programu.
+The `main.cpp` file is responsible for starting the program.
 
-Wykonuje następujące kroki:
+It performs the following steps:
 
-1. Otwiera plik `input.txt`.
-2. Wczytuje pojemność plecaka.
-3. Wczytuje listę przedmiotów.
-4. Sprawdza podstawowe błędy danych wejściowych.
-5. Tworzy obiekt klasy `Knapsack`.
-6. Wywołuje algorytm rozwiązujący problem.
-7. Wypisuje przedmioty, tablice `P`, `Q` oraz najlepszy wynik.
+1. Opens the `input.txt` file.
+2. Reads the backpack capacity.
+3. Reads the list of items.
+4. Checks basic input data errors.
+5. Creates an object of the `Knapsack` class.
+6. Calls the algorithm that solves the problem.
+7. Prints the items, the `P` and `Q` arrays, and the best result.
 
 ---
 
-## 4. Format danych wejściowych
+## 4. Input Data Format
 
-Dane wejściowe znajdują się w pliku `input.txt`.
+The input data is located in the `input.txt` file.
 
-Pierwsza linia zawiera pojemność plecaka:
+The first line contains the backpack capacity:
 
 ```text
 10
 ```
 
-Każda kolejna linia zawiera dane jednego przedmiotu:
+Each following line contains data for one item:
 
 ```text
-nazwa wartość masa
+name value mass
 ```
 
-Przykład:
+Example:
 
 ```text
 10
@@ -148,43 +148,43 @@ Szalik 10 3
 Buty 100 9
 ```
 
-W tym przykładzie pojemność plecaka wynosi `10`.
+In this example, the backpack capacity is `10`.
 
 ---
 
-## 5. Najważniejsza idea algorytmu
+## 5. Main Idea of the Algorithm
 
-Algorytm używa programowania dynamicznego.
+The algorithm uses dynamic programming.
 
-Dla każdego przedmiotu `i` oraz każdej pojemności plecaka `j` program sprawdza dwie możliwości:
+For each item `i` and each backpack capacity `j`, the program checks two possibilities:
 
-### Opcja 1 — nie bierzemy aktualnego przedmiotu
+### Option 1 — do not take the current item
 
-Wtedy najlepszy wynik jest taki sam jak w poprzednim wierszu:
+Then the best result is the same as in the previous row:
 
 ```cpp
 P[i - 1][j]
 ```
 
-Oznacza to, że ignorujemy aktualny przedmiot i korzystamy tylko z poprzednich przedmiotów.
+This means that the current item is ignored and only the previous items are used.
 
 ---
 
-### Opcja 2 — bierzemy aktualny przedmiot
+### Option 2 — take the current item
 
-Jeżeli masa aktualnego przedmiotu mieści się w aktualnej pojemności plecaka, można go dodać:
+If the mass of the current item fits into the current backpack capacity, it can be added:
 
 ```cpp
 P[i][j - currMass] + currVal
 ```
 
-Używane jest `P[i][...]`, a nie `P[i - 1][...]`, ponieważ w ogólnym problemie plecakowym ten sam przedmiot można wybrać wiele razy.
+`P[i][...]` is used instead of `P[i - 1][...]` because in the general knapsack problem the same item can be selected many times.
 
 ---
 
-## 6. Wzór dynamiczny
+## 6. Dynamic Formula
 
-Dla każdego `i` i `j` program wybiera większą wartość:
+For each `i` and `j`, the program chooses the greater value:
 
 ```cpp
 P[i][j] = max(
@@ -193,13 +193,13 @@ P[i][j] = max(
 )
 ```
 
-Druga opcja jest możliwa tylko wtedy, gdy:
+The second option is possible only when:
 
 ```cpp
 currMass <= j
 ```
 
-Jeżeli przedmiot nie mieści się w plecaku, program przepisuje wartość z poprzedniego wiersza:
+If the item does not fit into the backpack, the program copies the value from the previous row:
 
 ```cpp
 P[i][j] = P[i - 1][j]
@@ -207,46 +207,46 @@ P[i][j] = P[i - 1][j]
 
 ---
 
-## 7. Opis działania funkcji
+## 7. Function Description
 
 ### `Knapsack::Knapsack(int backpackCap, std::vector<Item> itemList)`
 
-Konstruktor klasy `Knapsack`.
+Constructor of the `Knapsack` class.
 
-Zapisuje pojemność plecaka i listę przedmiotów, a następnie tworzy tablice `P` i `Q`.
+It stores the backpack capacity and the list of items, and then creates the `P` and `Q` arrays.
 
-Tablice mają rozmiar:
+The arrays have the following size:
 
 ```text
-liczba_przedmiotów + 1
-pojemność_plecaka + 1
+number_of_items + 1
+backpack_capacity + 1
 ```
 
-Dodatkowy wiersz i dodatkowa kolumna są potrzebne dla przypadku bazowego, czyli sytuacji, gdy:
+The additional row and additional column are needed for the base case, which is the situation when:
 
-- nie mamy żadnych przedmiotów,
-- pojemność plecaka wynosi `0`.
+* there are no items,
+* the backpack capacity is `0`.
 
 ---
 
 ### `Knapsack::solve()`
 
-Najważniejsza funkcja programu.
+The most important function of the program.
 
-Wypełnia tablice `P` i `Q`.
+It fills the `P` and `Q` arrays.
 
-Działanie funkcji:
+How the function works:
 
-1. Przechodzi po wszystkich przedmiotach.
-2. Dla każdego przedmiotu przechodzi po wszystkich możliwych pojemnościach plecaka.
-3. Sprawdza, czy aktualny przedmiot mieści się w aktualnej pojemności.
-4. Oblicza wynik bez aktualnego przedmiotu.
-5. Oblicza wynik z aktualnym przedmiotem.
-6. Porównuje oba wyniki.
-7. Lepszy wynik zapisuje w tablicy `P`.
-8. Informację o wybranym przedmiocie zapisuje w tablicy `Q`.
+1. It iterates through all items.
+2. For each item, it iterates through all possible backpack capacities.
+3. It checks whether the current item fits into the current capacity.
+4. It calculates the result without the current item.
+5. It calculates the result with the current item.
+6. It compares both results.
+7. It stores the better result in the `P` array.
+8. It stores information about the selected item in the `Q` array.
 
-Fragment odpowiedzialny za decyzję:
+The part responsible for the decision:
 
 ```cpp
 if(optionWithItem > optionWithoutItem){
@@ -258,67 +258,67 @@ if(optionWithItem > optionWithoutItem){
 }
 ```
 
-Jeżeli wybranie aktualnego przedmiotu daje lepszą wartość, program zapisuje tę wartość i numer przedmiotu.
+If choosing the current item gives a better value, the program stores this value and the item number.
 
-Jeżeli lepszy lub równy wynik był już wcześniej dostępny, program kopiuje wartość z poprzedniego wiersza.
+If a better or equal result was already available earlier, the program copies the value from the previous row.
 
 ---
 
 ### `Knapsack::printItems() const`
 
-Funkcja wypisuje wszystkie przedmioty wczytane z pliku.
+This function prints all items read from the file.
 
-Dla każdego przedmiotu wypisywane są:
+For each item, it prints:
 
-- numer przedmiotu,
-- nazwa,
-- masa,
-- wartość.
+* item number,
+* name,
+* mass,
+* value.
 
 ---
 
 ### `Knapsack::printTableP() const`
 
-Funkcja wypisuje tablicę `P`.
+This function prints the `P` array.
 
-Tablica `P` pokazuje najlepsze wartości dla kolejnych pojemności plecaka i kolejnych zestawów dostępnych przedmiotów.
+The `P` array shows the best values for consecutive backpack capacities and consecutive sets of available items.
 
-Wiersz `i` oznacza, że można korzystać z pierwszych `i` przedmiotów.
+Row `i` means that the first `i` items can be used.
 
-Kolumna `j` oznacza pojemność plecaka równą `j`.
+Column `j` means that the backpack capacity is equal to `j`.
 
 ---
 
 ### `Knapsack::printTableQ() const`
 
-Funkcja wypisuje tablicę `Q`.
+This function prints the `Q` array.
 
-Tablica `Q` pokazuje, który przedmiot został wybrany jako ostatni przy uzyskaniu wartości zapisanej w tablicy `P`.
+The `Q` array shows which item was selected last when obtaining the value stored in the `P` array.
 
-Dzięki tej tablicy można później odtworzyć, z jakich przedmiotów składa się najlepsze rozwiązanie.
+Thanks to this array, it is possible to later reconstruct which items make up the best solution.
 
 ---
 
 ### `Knapsack::printBestValue() const`
 
-Funkcja wypisuje najlepszą możliwą wartość plecaka.
+This function prints the best possible backpack value.
 
-Wartość ta znajduje się w ostatniej komórce tablicy `P`:
+This value is located in the last cell of the `P` array:
 
 ```cpp
 P[n][capacity]
 ```
 
-gdzie:
+where:
 
-- `n` — liczba przedmiotów,
-- `capacity` — pojemność plecaka.
+* `n` — number of items,
+* `capacity` — backpack capacity.
 
 ---
 
-## 8. Przykładowy wynik działania programu
+## 8. Example Program Output
 
-Dla danych wejściowych:
+For the following input data:
 
 ```text
 10
@@ -330,7 +330,7 @@ Szalik 10 3
 Buty 100 9
 ```
 
-program wypisuje:
+the program prints:
 
 ```text
 Items:
@@ -366,21 +366,21 @@ Table Q - last chosen item:
 Best value: 285
 ```
 
-Najlepsza wartość wynosi `285`.
+The best value is `285`.
 
-Wynik ten jest możliwy do uzyskania dla plecaka o pojemności `10`.
+This result can be achieved for a backpack with capacity `10`.
 
 ---
 
-## 9. Kompilacja programu
+## 9. Program Compilation
 
-Program można skompilować poleceniem:
+The program can be compiled with the command:
 
 ```bash
 g++ main.cpp knapsack.cpp -o program
 ```
 
-Uruchomienie programu:
+Running the program:
 
 ```bash
 ./program
@@ -388,12 +388,12 @@ Uruchomienie programu:
 
 ---
 
-## 10. Podsumowanie
+## 10. Summary
 
-Program rozwiązuje ogólny problem plecakowy przy pomocy programowania dynamicznego.
+The program solves the general knapsack problem using dynamic programming.
 
-Najważniejszą częścią programu jest tablica `P`, która przechowuje najlepsze wartości dla kolejnych pojemności plecaka.
+The most important part of the program is the `P` array, which stores the best values for consecutive backpack capacities.
 
-Tablica `Q` przechowuje informację o ostatnio wybranym przedmiocie, co pozwala analizować sposób budowania rozwiązania.
+The `Q` array stores information about the last selected item, which allows the process of building the solution to be analyzed.
 
-Dzięki zastosowaniu programowania dynamicznego program nie sprawdza wszystkich możliwych kombinacji ręcznie, tylko stopniowo buduje rozwiązanie na podstawie wcześniej obliczonych wyników.
+Thanks to the use of dynamic programming, the program does not manually check all possible combinations, but gradually builds the solution based on previously calculated results.

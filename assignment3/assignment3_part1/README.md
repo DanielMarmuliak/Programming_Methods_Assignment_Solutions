@@ -1,38 +1,46 @@
-# Laboratorium 3 – Metody Programowania
+# Laboratory 3 – Programming Methods
 
-## Opis zadania
-Celem zadania było napisanie programu działającego na uporządkowanej niemalejąco tablicy liczb całkowitych. Program dla każdego zestawu danych realizuje trzy operacje:
+## Task Description
 
-1. **Obliczanie liczby wystąpień zadanej wartości**  
-   Zostało zrealizowane w pesymistycznej złożoności O(log n) przy użyciu dwóch wyszukiwań binarnych:
-   - pierwszego elementu `>= x`
-   - pierwszego elementu `> x`
+The aim of the task was to write a program that operates on an integer array sorted in non-decreasing order. For each data set, the program performs three operations:
 
-2. **Wyszukiwanie indeksu elementu równego zadanej wartości metodą interpolacyjną**  
-   Zastosowano klasyczne wyszukiwanie interpolacyjne
-   Jeżeli wartość nie występuje w tablicy, zwracane jest `-1`
+1. **Counting the number of occurrences of a given value**
+   This was implemented with pessimistic time complexity O(log n) using two binary searches:
 
-3. **Usuwanie duplikatów**  
-   Duplikaty są usuwane w miejscu, bez tworzenia dodatkowej tablicy pomocniczej, w czasie O(n).
+   * the first element `>= x`
+   * the first element `> x`
 
-## Struktura programu
-Program został podzielony na pliki:
-- `main.cpp` – obsługa wejścia/wyjścia
-- `algorithms.h` – deklaracje funkcji
-- `algorithms.cpp` – implementacja algorytmów
+2. **Searching for the index of an element equal to a given value using interpolation search**
+   The classic interpolation search algorithm was used.
+   If the value does not occur in the array, `-1` is returned.
 
-## Zastosowane funkcje
-- `f_findFirstNotLess(...)`
-- `f_findFirstGreater(...)`
-- `f_countOccurrences(...)`
-- `f_interpolationSearch(...)`
-- `f_removeDuplicates(...)`
+3. **Removing duplicates**
+   Duplicates are removed in place, without creating an additional helper array, in O(n) time.
 
-## Uwagi
-- Tablica wejściowa jest uporządkowana niemalejąco.
-- Przy wielokrotnym wystąpieniu tej samej wartości wyszukiwanie interpolacyjne może zwrócić **dowolny poprawny indeks** jednego z tych wystąpień.
-- Po usunięciu duplikatów wypisywane jest maksymalnie 200 pierwszych elementów, po 50 w jednym wierszu.
+## Program Structure
 
-## Kompilacja
+The program was divided into the following files:
+
+* `main.cpp` – input/output handling
+* `algorithms.h` – function declarations
+* `algorithms.cpp` – implementation of the algorithms
+
+## Used Functions
+
+* `f_findFirstNotLess(...)`
+* `f_findFirstGreater(...)`
+* `f_countOccurrences(...)`
+* `f_interpolationSearch(...)`
+* `f_removeDuplicates(...)`
+
+## Notes
+
+* The input array is sorted in non-decreasing order.
+* If the same value occurs multiple times, interpolation search may return **any valid index** of one of these occurrences.
+* After removing duplicates, at most the first 200 elements are printed, with 50 elements per line.
+
+## Compilation
+
 ```bash
 g++ -std=c++17 -O2 main.cpp algorithms.cpp -o lab3
+```

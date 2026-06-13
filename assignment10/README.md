@@ -1,24 +1,24 @@
-# Laboratorium 10 — Algorytm Huffmana
+# Laboratory 10 — Huffman Algorithm
 
-## Temat zadania
+## Task Topic
 
-Celem zadania jest zaimplementowanie algorytmu Huffmana, który służy do budowania optymalnego kodu prefiksowego dla podanych symboli i ich częstości występowania.
+The aim of the task is to implement the Huffman algorithm, which is used to build an optimal prefix code for given symbols and their frequencies.
 
-W programie zastosowano:
+The program uses:
 
-* podział programu na pliki nagłówkowe i implementacyjne,
-* tematyczne pogrupowanie funkcji,
-* kolejkę priorytetową,
-* drzewo binarne Huffmana,
-* rekurencyjne generowanie kodów,
-* własne klasy wyjątków dziedziczące po `std::runtime_error`,
-* obsługę błędów za pomocą `try-catch`.
+* division of the program into header and implementation files,
+* thematic grouping of functions,
+* a priority queue,
+* a Huffman binary tree,
+* recursive code generation,
+* custom exception classes derived from `std::runtime_error`,
+* error handling using `try-catch`.
 
 ---
 
-## Struktura projektu
+## Project Structure
 
-Projekt składa się z następujących plików:
+The project consists of the following files:
 
 ```text
 main.cpp
@@ -30,29 +30,29 @@ Exceptions.h
 README.md
 ```
 
-### Opis plików
+### File Description
 
 #### `main.cpp`
 
-Główny plik programu.
-Zawiera funkcję `main()`, menu programu oraz funkcję pomocniczą `runHuffmanExample()`, która uruchamia cały proces kodowania Huffmana dla wybranego zestawu danych.
+The main program file.
+It contains the `main()` function, the program menu, and the helper function `runHuffmanExample()`, which starts the whole Huffman coding process for the selected data set.
 
 #### `Huffman.h`
 
-Plik nagłówkowy zawierający deklaracje struktur i funkcji związanych z algorytmem Huffmana.
+A header file containing declarations of structures and functions related to the Huffman algorithm.
 
-Znajdują się tutaj między innymi:
+It includes, among others:
 
-* struktura `Node`,
-* struktura `SymbolData`,
-* struktura `CompareNodes`,
-* deklaracje funkcji do budowania drzewa, generowania kodów, wypisywania wyników i usuwania drzewa.
+* the `Node` structure,
+* the `SymbolData` structure,
+* the `CompareNodes` structure,
+* declarations of functions for building the tree, generating codes, printing results, and deleting the tree.
 
 #### `Huffman.cpp`
 
-Plik implementacyjny zawierający właściwą logikę algorytmu Huffmana.
+An implementation file containing the actual logic of the Huffman algorithm.
 
-Zaimplementowano tutaj funkcje:
+The following functions are implemented here:
 
 * `buildHuffmanTree()`,
 * `generateCodes()`,
@@ -61,66 +61,66 @@ Zaimplementowano tutaj funkcje:
 
 #### `InputData.h`
 
-Plik nagłówkowy z deklaracjami funkcji odpowiedzialnych za dane wejściowe oraz ich walidację.
+A header file with declarations of functions responsible for input data and its validation.
 
 #### `InputData.cpp`
 
-Plik implementacyjny zawierający przykładowe zestawy danych oraz funkcję `validateInput()`.
+An implementation file containing sample data sets and the `validateInput()` function.
 
-Funkcja ta sprawdza, czy dane są poprawne przed rozpoczęciem budowy drzewa Huffmana.
+This function checks whether the data is correct before the Huffman tree is built.
 
 #### `Exceptions.h`
 
-Plik zawierający własne klasy wyjątków, które dziedziczą po `std::runtime_error`.
+A file containing custom exception classes derived from `std::runtime_error`.
 
 ---
 
-## Opis algorytmu Huffmana
+## Description of the Huffman Algorithm
 
-Algorytm Huffmana służy do tworzenia optymalnego kodu prefiksowego.
+The Huffman algorithm is used to create an optimal prefix code.
 
-Oznacza to, że:
+This means that:
 
-* symbole występujące częściej otrzymują krótsze kody,
-* symbole występujące rzadziej otrzymują dłuższe kody,
-* żaden kod nie jest początkiem innego kodu.
+* symbols that occur more often receive shorter codes,
+* symbols that occur less often receive longer codes,
+* no code is the beginning of another code.
 
-Dzięki temu zakodowany tekst może zajmować mniej miejsca.
-
----
-
-## Sposób działania programu
-
-Program działa według następującego schematu:
-
-1. Użytkownik wybiera zestaw danych z menu.
-2. Program sprawdza poprawność danych wejściowych.
-3. Dla każdego symbolu tworzony jest osobny liść drzewa.
-4. Wszystkie liście są dodawane do kolejki priorytetowej.
-5. Program pobiera z kolejki dwa węzły o najmniejszej częstości.
-6. Z tych dwóch węzłów tworzony jest nowy węzeł nadrzędny.
-7. Nowy węzeł jest dodawany z powrotem do kolejki.
-8. Kroki 5–7 powtarzają się, dopóki w kolejce nie zostanie jeden element.
-9. Ostatni element kolejki jest korzeniem drzewa Huffmana.
-10. Program przechodzi rekurencyjnie po drzewie i generuje kody.
-11. Wyniki są wypisywane na ekranie.
-12. Drzewo jest usuwane z pamięci.
+Thanks to this, encoded text can take up less space.
 
 ---
 
-## Kolejka priorytetowa
+## How the Program Works
 
-W programie wykorzystano kolejkę priorytetową:
+The program works according to the following scheme:
+
+1. The user selects a data set from the menu.
+2. The program checks the correctness of the input data.
+3. A separate leaf of the tree is created for each symbol.
+4. All leaves are added to the priority queue.
+5. The program takes two nodes with the lowest frequency from the queue.
+6. A new parent node is created from these two nodes.
+7. The new node is added back to the queue.
+8. Steps 5–7 are repeated until only one element remains in the queue.
+9. The last element in the queue becomes the root of the Huffman tree.
+10. The program recursively traverses the tree and generates codes.
+11. The results are printed on the screen.
+12. The tree is deleted from memory.
+
+---
+
+## Priority Queue
+
+The program uses a priority queue:
 
 ```cpp
 std::priority_queue<Node*, std::vector<Node*>, CompareNodes> pq;
 ```
 
-Domyślnie `priority_queue` w C++ ustawia największy element na początku.
+By default, `priority_queue` in C++ places the largest element at the front.
 
-W algorytmie Huffmana potrzebujemy odwrotnie — na początku muszą znajdować się elementy o najmniejszej częstości.
+In the Huffman algorithm, we need the opposite — the elements with the smallest frequencies must be at the front.
 
-Dlatego zastosowano własny komparator:
+Therefore, a custom comparator was used:
 
 ```cpp
 struct CompareNodes {
@@ -130,45 +130,45 @@ struct CompareNodes {
 };
 ```
 
-Dzięki temu kolejka priorytetowa działa tak, że na jej początku znajduje się węzeł z najmniejszą wartością `frequency`.
+Thanks to this, the priority queue works in such a way that the node with the smallest `frequency` value is at the front.
 
 ---
 
-## Generowanie kodów Huffmana
+## Generating Huffman Codes
 
-Do wygenerowania kodów używana jest funkcja rekurencyjna:
+The recursive function used to generate the codes is:
 
 ```cpp
 void generateCodes(Node* root, const std::string& currentCode,
                    std::map<char, std::string>& codes);
 ```
 
-Funkcja przechodzi po gotowym drzewie Huffmana.
+The function traverses the completed Huffman tree.
 
-Przyjęto zasadę:
+The following rule is used:
 
 ```text
-przejście w lewo  -> 0
-przejście w prawo -> 1
+move left  -> 0
+move right -> 1
 ```
 
-Jeżeli funkcja trafi do liścia, zapisuje gotowy kod dla symbolu znajdującego się w tym liściu.
+If the function reaches a leaf, it saves the final code for the symbol stored in that leaf.
 
-Przykład:
+Example:
 
 ```text
-root -> lewo        = 0
-root -> prawo lewo  = 10
-root -> prawo prawo = 11
+root -> left         = 0
+root -> right left   = 10
+root -> right right  = 11
 ```
 
 ---
 
-## Obsługa wyjątków
+## Exception Handling
 
-W projekcie zaimplementowano własne klasy wyjątków dziedziczące po `std::runtime_error`.
+The project implements custom exception classes derived from `std::runtime_error`.
 
-Plik `Exceptions.h` zawiera między innymi:
+The `Exceptions.h` file includes, among others:
 
 ```cpp
 class EmptyInputException : public std::runtime_error
@@ -186,9 +186,9 @@ class InvalidFrequencyException : public std::runtime_error
 class DuplicateSymbolException : public std::runtime_error
 ```
 
-Wyjątki są rzucane w funkcji `validateInput()`.
+Exceptions are thrown in the `validateInput()` function.
 
-Przykładowo:
+For example:
 
 ```cpp
 if (symbols.empty()) {
@@ -196,24 +196,24 @@ if (symbols.empty()) {
 }
 ```
 
-W funkcji `main()` wyjątki są przechwytywane za pomocą bloku:
+In the `main()` function, exceptions are caught using the block:
 
 ```cpp
 try {
-    // kod programu
+    // program code
 }
 catch (const std::exception& e) {
-    std::cout << "BLAD: " << e.what() << "\n";
+    std::cout << "ERROR: " << e.what() << "\n";
 }
 ```
 
-Ponieważ własne wyjątki dziedziczą po `std::runtime_error`, a `std::runtime_error` dziedziczy po `std::exception`, można je wszystkie obsłużyć jednym blokiem `catch`.
+Because the custom exceptions inherit from `std::runtime_error`, and `std::runtime_error` inherits from `std::exception`, all of them can be handled with one `catch` block.
 
 ---
 
-## Przykładowe dane poprawne
+## Example Correct Data
 
-### Dane z zadania A
+### Data from Task A
 
 ```text
 A 12
@@ -225,7 +225,7 @@ X 5
 Z 2
 ```
 
-### Dane z zadania B
+### Data from Task B
 
 ```text
 c 0.11
@@ -235,16 +235,15 @@ r 0.12
 s 0.15
 t 0.10
 x 0.14
-
 ```
 
 ---
 
-## Przykładowe dane błędne
+## Example Incorrect Data
 
-Program pokazuje działanie wyjątków dla różnych rodzajów błędnych danych.
+The program shows how exceptions work for different types of incorrect input data.
 
-### Ujemna częstość
+### Negative Frequency
 
 ```text
 A 12
@@ -252,13 +251,13 @@ B -7
 C 5
 ```
 
-Wynik:
+Result:
 
 ```text
 Error: The frequency or probability must be greater than zero
 ```
 
-### Powtórzony symbol
+### Repeated Symbol
 
 ```text
 A 12
@@ -266,27 +265,27 @@ B 7
 A 5
 ```
 
-Wynik:
+Result:
 
 ```text
 Error: The same symbol cannot appear more than once
 ```
 
-### Tylko jeden symbol
+### Only One Symbol
 
 ```text
 A 12
 ```
 
-Wynik:
+Result:
 
 ```text
-Eror: To build a Huffman tree, at least two symbols are needed
+Error: To build a Huffman tree, at least two symbols are needed
 ```
 
-### Pusta lista danych
+### Empty Data List
 
-Wynik:
+Result:
 
 ```text
 Error: The input list is empty
@@ -294,9 +293,9 @@ Error: The input list is empty
 
 ---
 
-## Kompilacja programu
+## Program Compilation
 
-Program można skompilować za pomocą komendy:
+The program can be compiled with the command:
 
 ```bash
 g++ main.cpp Huffman.cpp InputData.cpp -o program
@@ -304,15 +303,15 @@ g++ main.cpp Huffman.cpp InputData.cpp -o program
 
 ---
 
-## Uruchomienie programu
+## Running the Program
 
-Na systemie Linux / macOS:
+On Linux / macOS:
 
 ```bash
 ./program
 ```
 
-Na systemie Windows:
+On Windows:
 
 ```bash
 program.exe
@@ -320,8 +319,8 @@ program.exe
 
 ---
 
-## Wnioski
+## Conclusions
 
-W zadaniu wykorzystano drzewo binarne oraz kolejkę priorytetową do implementacji algorytmu Huffmana. Dzięki zastosowaniu własnego komparatora kolejka priorytetowa zwraca elementy o najmniejszej częstości jako pierwsze. Rekurencyjne przejście po drzewie pozwala wygenerować kody binarne dla wszystkich symboli.
+The task uses a binary tree and a priority queue to implement the Huffman algorithm. Thanks to the custom comparator, the priority queue returns the elements with the smallest frequencies first. Recursive traversal of the tree allows binary codes to be generated for all symbols.
 
-Zastosowanie własnych klas wyjątków pozwoliło uporządkować obsługę błędów i zaprezentować reakcję programu na różne niepoprawne dane wejściowe.
+The use of custom exception classes made error handling more organized and allowed the program to present its reaction to different types of incorrect input data.

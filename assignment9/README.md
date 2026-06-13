@@ -1,107 +1,108 @@
-# Laboratorium 9 — Program 01
+# Laboratory 9 
 
-## Temat zadania
+## Task Topic
 
-Program rozwiązuje problem plecakowy 0/1 za pomocą algorytmu z powrotami oraz metody ograniczeń, czyli `branch and bound`.
+The program solves the 0/1 knapsack problem using a backtracking algorithm and the branch and bound method.
 
-W zadaniu mamy 5 przedmiotów i plecak o pojemności `W = 19`. Każdy przedmiot ma:
+In this task, there are 5 items and a backpack with capacity `W = 19`. Each item has:
 
-- `p` — zysk / wartość,
-- `w` — wagę,
-- `p/w` — stosunek zysku do wagi.
+* `p` — profit / value,
+* `w` — weight,
+* `p/w` — profit-to-weight ratio.
 
-Celem jest wybranie takich przedmiotów, aby nie przekroczyć pojemności plecaka i uzyskać jak największy zysk.
+The goal is to choose such items that the backpack capacity is not exceeded and the maximum possible profit is obtained.
 
-## Dane użyte w programie
+## Data Used in the Program
 
-| i | p | w | p/w |
-|---|---:|---:|---:|
-| 1 | 20 | 2 | 10 |
-| 2 | 30 | 5 | 6 |
-| 3 | 35 | 7 | 5 |
-| 4 | 12 | 3 | 4 |
-| 5 | 3 | 1 | 3 |
+| i |  p |  w | p/w |
+| - | -: | -: | --: |
+| 1 | 20 |  2 |  10 |
+| 2 | 30 |  5 |   6 |
+| 3 | 35 |  7 |   5 |
+| 4 | 12 |  3 |   4 |
+| 5 |  3 |  1 |   3 |
 
-## Jak działa program
+## How the Program Works
 
-1. Program tworzy listę przedmiotów zgodnie z tabelą z zadania.
-2. Przedmioty są sortowane malejąco według wartości `p/w`.
-3. Algorytm buduje drzewo decyzji.
-4. Dla każdego przedmiotu sprawdzane są dwie możliwości:
-   - wziąć przedmiot do plecaka,
-   - nie wziąć przedmiotu do plecaka.
-5. Dla każdego węzła obliczana jest granica `bound`, czyli optymistyczny maksymalny zysk możliwy do uzyskania z tego miejsca drzewa.
-6. Jeżeli węzeł nie może dać lepszego wyniku niż aktualne najlepsze rozwiązanie, program go odcina.
-7. Na końcu program zapisuje najlepszy wynik do pliku `wynik.txt`.
+1. The program creates a list of items according to the table from the assignment.
+2. The items are sorted in descending order by the `p/w` value.
+3. The algorithm builds a decision tree.
+4. For each item, two possibilities are checked:
 
-## Wzór na granicę
+   * take the item into the backpack,
+   * do not take the item into the backpack.
+5. For each node, the `bound` is calculated, which means the optimistic maximum profit that can be obtained from this place in the tree.
+6. If a node cannot give a better result than the current best solution, the program cuts it off.
+7. At the end, the program saves the best result to the file `wynik.txt`.
 
-Granica jest liczona na podstawie idei plecaka ułamkowego. Program dodaje całe kolejne przedmioty, dopóki mieszczą się w plecaku. Jeśli następny przedmiot już się nie mieści, program dodaje tylko jego możliwą ułamkową część do obliczenia teoretycznej granicy.
+## Formula for the Bound
 
-W uproszczeniu:
+The bound is calculated based on the idea of the fractional knapsack problem. The program adds whole next items as long as they fit into the backpack. If the next item no longer fits, the program adds only its possible fractional part to calculate the theoretical bound.
+
+In simplified form:
 
 ```text
-bound = aktualny_zysk + zysk_kolejnych_przedmiotów + wolne_miejsce * (p/w następnego przedmiotu)
+bound = current_profit + profit_of_next_items + free_space * (p/w of the next item)
 ```
 
-Dzięki temu wiemy, czy warto dalej rozwijać dany węzeł drzewa.
+Thanks to this, we know whether it is worth continuing to develop a given node of the tree.
 
-## Struktura plików
+## File Structure
 
 ```text
 lab9_Danylo_Marmulyak/
 │
-├── main.cpp                          # główny plik programu
-├── Item.h                            # struktura jednego przedmiotu
-├── KnapsackSolver.h                  # deklaracja klasy rozwiązującej problem
-├── KnapsackSolver.cpp                # implementacja algorytmu
-└── README.md                         # opis zadania
+├── main.cpp                          # main program file
+├── Item.h                            # structure of one item
+├── KnapsackSolver.h                  # declaration of the class solving the problem
+├── KnapsackSolver.cpp                # algorithm implementation
+└── README.md                         # task description
 ```
 
-## Kompilacja
+## Compilation
 
-Program można skompilować poleceniem:
+The program can be compiled with the command:
 
 ```bash
 g++ main.cpp KnapsackSolver.cpp -o program01
 ```
 
-## Uruchomienie
+## Running the Program
 
-Po kompilacji należy uruchomić program:
+After compilation, run the program:
 
 ```bash
 ./program01
 ```
 
-Program utworzy plik:
+The program will create the file:
 
 ```text
 wynik.txt
 ```
 
-W pliku `wynik.txt` znajdują się wszystkie kroki działania algorytmu: aktualny węzeł, zysk, waga, obliczona granica, decyzje o dodaniu albo pominięciu przedmiotu oraz wynik końcowy.
+The file `wynik.txt` contains all steps of the algorithm: the current node, profit, weight, calculated bound, decisions about adding or skipping an item, and the final result.
 
-## Wynik dla danych z zadania
+## Result for the Task Data
 
-Dla podanych danych najlepszym rozwiązaniem jest wzięcie wszystkich przedmiotów:
+For the given data, the best solution is to take all items:
 
 ```text
-Przedmioty: 1, 2, 3, 4, 5
-Łączna waga: 18
-Maksymalny zysk: 100
-Pozostała pojemność plecaka: 1
+Items: 1, 2, 3, 4, 5
+Total weight: 18
+Maximum profit: 100
+Remaining backpack capacity: 1
 ```
 
-Wynik jest poprawny, ponieważ suma wag wszystkich przedmiotów wynosi `18`, a pojemność plecaka wynosi `19`, więc wszystkie przedmioty mieszczą się w plecaku.
+The result is correct because the total weight of all items is `18`, and the backpack capacity is `19`, so all items fit into the backpack.
 
-Do wykonania zadania użyliśmy:
+To complete the task, we used:
 
-- rekurencji,
-- algorytmu z powrotami,
-- metody `branch and bound`,
-- sortowania przedmiotów według `p/w`,
+* recursion,
+* a backtracking algorithm,
+* the branch and bound method,
+* sorting items by `p/w`.
 
-## Krótkie podsumowanie
+## Short Summary
 
-Program sprawdza różne kombinacje przedmiotów, ale nie musi analizować całego drzewa do końca. Jeżeli z obliczonej granicy wynika, że dany węzeł nie da lepszego wyniku niż obecnie najlepszy, to dalsze sprawdzanie tej gałęzi jest pomijane. Dzięki temu algorytm działa czytelnie i pokazuje, jak można ograniczyć liczbę sprawdzanych przypadków.
+The program checks different combinations of items, but it does not always have to analyze the entire tree to the end. If the calculated bound shows that a given node cannot produce a better result than the current best solution, further checking of that branch is skipped. Thanks to this, the algorithm works clearly and shows how the number of checked cases can be reduced.

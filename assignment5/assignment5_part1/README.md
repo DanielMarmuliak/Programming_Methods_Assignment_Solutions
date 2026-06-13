@@ -1,85 +1,91 @@
-# Zadanie: Macierz incydencji grafu skierowanego
+# Task: Incidence Matrix of a Directed Graph
 
+## Task Topic
 
-## Temat zadania
-Napisanie programu, który dla grafu skierowanego:
+Writing a program that, for a directed graph:
 
-- wczytuje dane wejściowe w postaci listy krawędzi,
-- wyznacza liczbę wierzchołków,
-- tworzy macierz incydencji,
-- wypisuje macierz incydencji,
-- wypisuje sąsiadów każdego wierzchołka.
-
----
-
-## Treść zadania
-
-Program ma wczytać graf skierowany zapisany w pliku tekstowym lub z wejścia standardowego w postaci listy krawędzi.
-
-Format danych wejściowych:
-
-- w pierwszej linii znajduje się liczba `k` oznaczająca liczbę krawędzi,
-- w kolejnych `k` liniach znajdują się pary liczb całkowitych `u v`, które oznaczają krawędź skierowaną od wierzchołka `u` do wierzchołka `v`.
-
-Na podstawie tych danych program ma:
-
-1. odczytać wszystkie krawędzie,
-2. określić liczbę wierzchołków,
-3. zbudować macierz incydencji dla grafu skierowanego,
-4. wypisać utworzoną macierz,
-5. wypisać sąsiadów każdego wierzchołka.
+* reads input data in the form of an edge list,
+* determines the number of vertices,
+* creates an incidence matrix,
+* prints the incidence matrix,
+* prints the neighbors of each vertex.
 
 ---
 
-## Założenia programu
+## Task Description
 
-W programie przyjęto następujące założenia:
+The program should read a directed graph stored in a text file or provided through standard input in the form of an edge list.
 
-- graf jest **skierowany**,
-- wierzchołki są numerowane liczbami całkowitymi dodatnimi, zaczynając od `1`,
-- liczba wierzchołków jest wyznaczana na podstawie największego numeru wierzchołka występującego w danych,
-- każda kolumna macierzy incydencji odpowiada dokładnie jednej krawędzi,
-- w macierzy incydencji przyjęto oznaczenia:
-  - `-1` — początek krawędzi,
-  - `1` — koniec krawędzi,
-  - `0` — brak związku danego wierzchołka z daną krawędzią.
+Input data format:
+
+* the first line contains the number `k`, which represents the number of edges,
+* the next `k` lines contain pairs of integers `u v`, which represent a directed edge from vertex `u` to vertex `v`.
+
+Based on this data, the program should:
+
+1. read all edges,
+2. determine the number of vertices,
+3. build an incidence matrix for the directed graph,
+4. print the created matrix,
+5. print the neighbors of each vertex.
 
 ---
 
-## Jak działa program
+## Program Assumptions
 
-### 1. Wczytanie danych
-Program odczytuje liczbę krawędzi `k`, a następnie zapisuje wszystkie krawędzie do wektora struktur `Edge`.
+The following assumptions were made in the program:
 
-Przykład danych wejściowych:
+* the graph is **directed**,
+* vertices are numbered with positive integers, starting from `1`,
+* the number of vertices is determined based on the largest vertex number appearing in the input data,
+* each column of the incidence matrix corresponds to exactly one edge,
+* the following notation is used in the incidence matrix:
 
+  * `-1` — the beginning of an edge,
+  * `1` — the end of an edge,
+  * `0` — no relation between the given vertex and the given edge.
 
+---
+
+## How the Program Works
+
+### 1. Reading the Data
+
+The program reads the number of edges `k`, and then stores all edges in a vector of `Edge` structures.
+
+Example input data:
+
+```text
 5
 1 2
 2 3
 1 3
 3 4
 4 2
+```
 
-## Przykładowe wyjście programu
+## Example Program Output
 
-### Macierz incydencji
+### Incidence Matrix
 
-
+```text
 -1 0 -1 0 0
 1 -1 0 0 1
 0 1 1 -1 0
 0 0 0 1 -1
+```
 
-### Sąsiedzi wierzchołków
+### Vertex Neighbors
 
+```text
 Neighbors of 1: 2 3
 Neighbors of 2: 3
 Neighbors of 3: 4
 Neighbors of 4: 2
+```
 
-## Kompilacja
+## Compilation
 
 ```bash
-
 g++ main.cpp graph.cpp incidence_matrix.cpp -o graph_program
+```

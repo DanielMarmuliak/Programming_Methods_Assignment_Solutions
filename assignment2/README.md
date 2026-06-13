@@ -1,128 +1,128 @@
-# Laboratorium 2 – dopasowanie siatki identyfikacyjnej
+# Laboratory 2 – Identification Grid Matching
 
+This folder contains my solution for the Laboratory 2 assignment. I tried to write the program in a simple and readable way, so the code was divided into several files, and the functions have clear names and comments.
 
-W tym folderze znajduje się moje rozwiązanie zadania z laboratorium 2. Starałem się napisać program możliwie prosto i czytelnie, dlatego kod został podzielony na kilka plików, a funkcje mają jasne nazwy i komentarze.
+## What is included in the folder
 
-## Co znajduje się w folderze
+* `main.cpp` – starts the program
+* `f_app.*` – main program logic
+* `f_io.*` – reading data from files and saving the result
+* `f_match.*` – calculating the matching error and selecting the best grid
+* `f_types.h` – helper data structures
+* `plot_best_fit.py` – Python script for generating plots
+* `plot_SEAK.png`, `plot_SEB.png` – ready-made plots
+* `wynik_SEAK.txt`, `wynik_SEB.txt` – sample results for the provided data
 
-- `main.cpp` – uruchamia program
-- `f_app.*` – główna logika programu
-- `f_io.*` – odczyt danych z plików i zapis wyniku
-- `f_match.*` – obliczanie błędu dopasowania i wybór najlepszej siatki
-- `f_types.h` – pomocnicze struktury danych
-- `plot_best_fit.py` – skrypt w Pythonie do wykonania wykresów
-- `plot_SEAK.png`, `plot_SEB.png` – gotowe wykresy
-- `wynik_SEAK.txt`, `wynik_SEB.txt` – przykładowe wyniki dla dostarczonych danych
+## Program Assumption
 
-## Założenie programu
+The program compares the grid of an unknown model with 81 identification grids and selects the one for which the matching error is the smallest.
 
-Program porównuje siatkę nieznanego modelu z 81 siatkami identyfikacyjnymi i wybiera tę, dla której błąd dopasowania jest najmniejszy.
-
-Do obliczeń użyłem wzoru z treści zadania:
+For the calculations, I used the formula from the assignment:
 
 ```text
 mse = sqrt( sum((y_i - Y_i)^2) + sum((x_i - X_i)^2) )
 ```
 
-Porównanie jest wykonywane tylko dla współrzędnych punktów, czyli od 7. elementu wiersza.
-Pierwsze 6 wartości traktowane są jako parametry modelu i nie biorą udziału w liczeniu błędu.
+The comparison is performed only for the point coordinates, starting from the 7th element of the row.
+The first 6 values are treated as model parameters and are not used when calculating the error.
 
-## Kompilacja programu
+## Program Compilation
 
-### Wariant z `g++`
+### Version with `g++`
 
 ```bash
 g++ -std=c++17 main.cpp f_app.cpp f_io.cpp f_match.cpp -o lab2_best_match
 ```
 
-Tutaj warto zaznaczyć, że `lab2_best_match` po `-o` jest tylko nazwą pliku wykonywalnego. Nie musi to być nazwa folderu.
+It is worth noting that `lab2_best_match` after `-o` is only the name of the executable file. It does not have to be the name of the folder.
 
-### Wariant z `CMake`
+### Version with `CMake`
 
 ```bash
 cmake -S . -B build
 cmake --build build
 ```
 
-## Uruchomienie programu
+## Running the Program
 
-Po uruchomieniu program prosi kolejno o podanie:
+After starting the program, it asks the user to enter:
 
-1. nazwy modelu,
-2. nazwy pliku z siatkami identyfikacyjnymi,
-3. nazwy pliku z nieznaną siatką,
-4. nazwy pliku wyjściowego.
+1. the model name,
+2. the name of the file with identification grids,
+3. the name of the file with the unknown grid,
+4. the name of the output file.
 
-Przykład uruchomienia dla silnika asynchronicznego klatkowego:
+Example run for the squirrel-cage asynchronous electric motor:
 
 ```text
-Model name: Silnik elektryczny asynchroniczny klatkowy
+Model name: Squirrel-cage asynchronous electric motor
 Grid file name: siatka_SEAK.txt
 Unknown model file name: nmSEAK.txt
 Output file name: wynik_SEAK.txt
 ```
 
-## Ważna uwaga dotycząca ścieżek do plików
+## Important Note About File Paths
 
-Podczas testowania programu pojawił się u mnie problem z komunikatem:
+During testing, I encountered the following problem:
 
 ```text
 Error: Cannot open file: siatka_SEAK.txt
 ```
 
-Powód był prosty: program był uruchamiany z folderu głównego, a pliki `.txt` znajdowały się w podfolderze `Wykresy`.
+The reason was simple: the program was being run from the main folder, while the `.txt` files were located in the `Wykresy` subfolder.
 
-W takiej sytuacji nie wystarczy wpisać samej nazwy pliku. Trzeba podać ścieżkę względną, na przykład:
+In this situation, entering only the file name is not enough. A relative path must be provided, for example:
 
 ```text
-Model name: Silnik elektryczny asynchroniczny klatkowy
+Model name: Squirrel-cage asynchronous electric motor
 Grid file name: Wykresy\siatka_SEAK.txt
 Unknown model file name: Wykresy\nmSEAK.txt
 Output file name: wynik_SEAK.txt
 ```
 
-Jeśli plik wynikowy również ma zostać zapisany w tym samym podfolderze, wtedy można wpisać:
+If the output file should also be saved in the same subfolder, then the following can be entered:
 
 ```text
 Output file name: Wykresy\wynik_SEAK.txt
 ```
 
-Analogicznie dla silnika bezszczotkowego:
+Similarly, for the brushless motor:
 
 ```text
-Model name: Silnik elektryczny bezszczotkowy
+Model name: Brushless electric motor
 Grid file name: Wykresy\siatkaSEB.txt
 Unknown model file name: Wykresy\nmSEB.txt
 Output file name: wynik_SEB.txt
 ```
 
-Jeżeli wszystkie pliki `.txt` znajdują się w tym samym folderze co program, wtedy można wpisywać same nazwy plików bez ścieżki.
+If all `.txt` files are located in the same folder as the program, then only the file names can be entered, without specifying the path.
 
-## Wyniki dla dostarczonych danych
+## Results for the Provided Data
 
-Dla plików dołączonych do zadania program wyznaczył:
+For the files included with the assignment, the program found:
 
-- dla `SEAK` – najlepsze dopasowanie: **siatka nr 52**, minimalne MSE = **0.131767298**,
-- dla `SEB` – najlepsze dopasowanie: **siatka nr 9**, minimalne MSE = **1.181461003**.
+* for `SEAK` – best match: **grid no. 52**, minimum MSE = **0.131767298**,
+* for `SEB` – best match: **grid no. 9**, minimum MSE = **1.181461003**.
 
-## Wykresy w Pythonie
+## Python Plots
 
-Do zadania przygotowałem też osobny skrypt w Pythonie, który rysuje wykres punktowy siatki nieznanej oraz najlepiej dopasowanej siatki modelowej.
+I also prepared a separate Python script for the assignment, which draws a scatter plot of the unknown grid and the best-matching model grid.
 
-Uruchomienie:
+Run it with:
 
 ```bash
 python plot_best_fit.py
 ```
 
-Najwygodniej jest trzymać plik `plot_best_fit.py` oraz pliki `.txt` w tym samym folderze. Wtedy nie trzeba zmieniać ścieżek w kodzie.
-Jeśli pliki znajdują się w innym miejscu, trzeba odpowiednio poprawić ścieżki.
+It is most convenient to keep the `plot_best_fit.py` file and the `.txt` files in the same folder. Then there is no need to change paths in the code.
+If the files are located somewhere else, the paths must be adjusted accordingly.
 
-## Dodatkowa uwaga
+## Additional Note
 
-Kod został rozdzielony na kilka plików celowo, żeby łatwiej było pokazać, za co odpowiada każda część programu:
-- osobno odczyt i zapis plików,
-- osobno obliczenia,
-- osobno uruchamianie programu.
+The code was intentionally divided into several files to make it easier to show what each part of the program is responsible for:
 
-Dodałem też komentarze nad funkcjami, żeby podczas sprawdzania kodu było od razu widać, co wykonuje każda z nich.
+* file reading and writing separately,
+* calculations separately,
+* program execution separately.
+
+I also added comments above the functions so that, when checking the code, it is immediately clear what each function does.

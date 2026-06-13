@@ -1,100 +1,114 @@
-# Program 02 – konwersja INF <-> ONP
+# Program 02 – INF <-> ONP Conversion
 
-## Opis programu
-Program służy do konwersji wyrażeń zapisanych w dwóch notacjach:
+## Program Description
 
-- **INF** – notacja infiksowa
-- **ONP** – odwrotna notacja polska
+The program is used to convert expressions written in two notations:
 
-Program obsługuje dwa kierunki konwersji:
-- `INF -> ONP`
-- `ONP -> INF`
+* **INF** – infix notation
+* **ONP** – Reverse Polish Notation
 
-Jeżeli wyrażenie jest niepoprawne, program zwraca `error`
----
+The program supports two conversion directions:
 
-## Obsługiwane elementy
+* `INF -> ONP`
+* `ONP -> INF`
 
-### Operandy
-- małe litery od `a` do `z`
-
-### Operatory
-- `=`
-- `<`
-- `>`
-- `+`
-- `-`
-- `*`
-- `/`
-- `%`
-- `^`
-- `~`
-
-Operator `~` jest operatorem unarnym
-
-### Nawiasy
-- `(` `)` – tylko dla notacji INF
+If the expression is incorrect, the program returns `error`.
 
 ---
 
-## Zasada działania programu
+## Supported Elements
 
-Program działa w kilku etapach:
+### Operands
 
-1. odczytuje liczbę testów,
-2. odczytuje kolejne linie wejściowe,
-3. rozpoznaje, czy linia zaczyna się od `INF:` czy `ONP:`,
-4. usuwa niepoprawne znaki z wyrażenia,
-5. wykonuje odpowiednią konwersję,
-6. wypisuje wynik
+* lowercase letters from `a` to `z`
 
----
+### Operators
 
-## Konwersja INF -> ONP
-Do konwersji z INF do ONP program używa:
-- stosu operatorów,
-- priorytetów operatorów,
-- łączności operatorów,
-- kontroli poprawności składni
+* `=`
+* `<`
+* `>`
+* `+`
+* `-`
+* `*`
+* `/`
+* `%`
+* `^`
+* `~`
 
-Operandy są dopisywane do wyniku, a operatory są odkładane na stos i zdejmowane zgodnie z priorytetami oraz nawiasami.
+The `~` operator is a unary operator.
 
----
+### Parentheses
 
-## Konwersja ONP -> INF
-Do konwersji z ONP do INF program używa:
-- stosu obiektów `Expr`
-
-Każdy element stosu przechowuje:
-- tekst wyrażenia,
-- priorytet operatora głównego,
-- operator główny,
-- informację, czy jest to pojedynczy operand
-
-Dzięki temu program potrafi poprawnie odbudować wyrażenie INF i dodać tylko potrzebne nawiasy
+* `(` `)` – only for INF notation
 
 ---
 
-## Obsługa błędów
-Program zwraca `error`, gdy:
-- wyrażenie ma złą składnię,
-- brakuje operandów lub operatorów,
-- nawiasy są niepoprawne,
-- końcowy zapis nie daje jednego poprawnego wyrażenia.
+## How the Program Works
+
+The program works in several stages:
+
+1. reads the number of tests,
+2. reads the following input lines,
+3. recognizes whether a line starts with `INF:` or `ONP:`,
+4. removes invalid characters from the expression,
+5. performs the appropriate conversion,
+6. prints the result.
 
 ---
 
-## Struktura plików
+## INF -> ONP Conversion
 
-- `main.cpp` – główny program
-- `helper_funcs.h`, `helper_funcs.cpp` – funkcje pomocnicze
-- `expr.h` – struktura `Expr`
-- `inf_to_onp.h`, `inf_to_onp.cpp` – konwersja INF -> ONP
-- `onp_to_inf.h`, `onp_to_inf.cpp` – konwersja ONP -> INF
+To convert from INF to ONP, the program uses:
+
+* an operator stack,
+* operator priorities,
+* operator associativity,
+* syntax correctness checking.
+
+Operands are added to the result, while operators are placed on the stack and removed according to priorities and parentheses.
 
 ---
 
-## Kompilacja
+## ONP -> INF Conversion
+
+To convert from ONP to INF, the program uses:
+
+* a stack of `Expr` objects.
+
+Each stack element stores:
+
+* the expression text,
+* the priority of the main operator,
+* the main operator,
+* information about whether it is a single operand.
+
+Thanks to this, the program can correctly rebuild the INF expression and add only the necessary parentheses.
+
+---
+
+## Error Handling
+
+The program returns `error` when:
+
+* the expression has incorrect syntax,
+* operands or operators are missing,
+* parentheses are incorrect,
+* the final notation does not produce one valid expression.
+
+---
+
+## File Structure
+
+* `main.cpp` – main program
+* `helper_funcs.h`, `helper_funcs.cpp` – helper functions
+* `expr.h` – `Expr` structure
+* `inf_to_onp.h`, `inf_to_onp.cpp` – INF -> ONP conversion
+* `onp_to_inf.h`, `onp_to_inf.cpp` – ONP -> INF conversion
+
+---
+
+## Compilation
 
 ```bash
 g++ main.cpp helper_funcs.cpp inf_to_onp.cpp onp_to_inf.cpp -o program.exe
+```

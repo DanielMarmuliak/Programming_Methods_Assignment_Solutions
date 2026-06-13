@@ -1,32 +1,23 @@
-# Projekt: Porównanie metod sortowania tablic
+# Project: Comparison of Array Sorting Methods
 
-## Autorzy projektu
+## Project Objective
 
-Projekt został wykonany w dwuosobowym zespole:
+The objective of the project was to write a C++ program that makes it possible to compare selected sorting algorithms in terms of the number of comparisons and element swaps performed.
 
-* **Daniel Marmuliak** — implementacja sortowania bąbelkowego wahadłowego `Shaker sort`, przygotowanie głównej struktury programu, obsługa menu, generowanie danych, zapis wyników do pliku oraz integracja całego projektu.
-* **Bartosz Zmucha** — implementacja sortowania szybkiego `Quick sort` w wariantach `Lomuto` i `Hoare` oraz implementacja sortowania przez kopcowanie `Heap sort`.
+The following sorting methods were implemented in the program:
 
----
+1. **Shaker sort** — bidirectional bubble sort.
+2. **Quick sort with Lomuto partitioning**.
+3. **Quick sort with Hoare partitioning**.
+4. **Heap sort**.
 
-## Cel projektu
-
-Celem projektu było napisanie programu w języku C++, który umożliwia porównanie wybranych algorytmów sortowania pod względem liczby wykonanych porównań oraz przestawień elementów.
-
-W programie zostały zaimplementowane następujące metody sortowania:
-
-1. **Shaker sort** — sortowanie bąbelkowe wahadłowe.
-2. **Quick sort z podziałem Lomuto**.
-3. **Quick sort z podziałem Hoare’a**.
-4. **Heap sort** — sortowanie przez kopcowanie.
-
-Program pozwala sprawdzić działanie algorytmów dla tablic o różnych długościach i różnych typach uporządkowania danych.
+The program allows the user to check how the algorithms work for arrays of different lengths and different types of data ordering.
 
 ---
 
-## Struktura projektu
+## Project Structure
 
-Projekt został podzielony na kilka plików, aby kod był czytelniejszy i łatwiejszy do rozwijania.
+The project was divided into several files to make the code more readable and easier to develop.
 
 ```text
 ProjektSortowanie/
@@ -39,86 +30,86 @@ ProjektSortowanie/
 └── cSortTablicy.cpp
 ```
 
-### Opis plików
+### File Description
 
 #### `main.cpp`
 
-Plik zawiera funkcję główną programu. Tworzony jest w nim obiekt klasy `cSortTablicy`, a następnie uruchamiane jest menu programu.
+This file contains the main function of the program. An object of the `cSortTablicy` class is created here, and then the program menu is started.
 
 #### `SortStats.h`
 
-Plik zawiera strukturę `SortStats`, która przechowuje statystyki sortowania:
+This file contains the `SortStats` structure, which stores sorting statistics:
 
-* liczbę porównań,
-* liczbę przestawień.
+* number of comparisons,
+* number of swaps.
 
 #### `cTablica.h`
 
-Plik nagłówkowy klasy `cTablica`. Klasa ta przechowuje tablicę oraz deklaracje metod sortowania.
+The header file of the `cTablica` class. This class stores the array and the declarations of sorting methods.
 
 #### `cTablica.cpp`
 
-Plik zawiera implementacje algorytmów sortowania:
+This file contains implementations of the sorting algorithms:
 
 * `shakerSort()`,
 * `quickSortLomuto()`,
 * `quickSortHoare()`,
 * `heapSort()`.
 
-Znajdują się tutaj również funkcje pomocnicze, takie jak `partitionLomuto()`, `partitionHoare()`, `heapify()` oraz `swapElements()`.
+It also contains helper functions such as `partitionLomuto()`, `partitionHoare()`, `heapify()`, and `swapElements()`.
 
 #### `cSortTablicy.h`
 
-Plik nagłówkowy klasy `cSortTablicy`. Klasa ta odpowiada za obsługę użytkownika, menu programu, generowanie tablic i uruchamianie testów.
+The header file of the `cSortTablicy` class. This class is responsible for user interaction, the program menu, generating arrays, and running tests.
 
 #### `cSortTablicy.cpp`
 
-Plik zawiera implementację menu programu, generowania tablic, wyboru metody sortowania oraz zapisu wyników do pliku tekstowego.
+This file contains the implementation of the program menu, array generation, sorting method selection, and saving results to a text file.
 
 ---
 
-## Opis działania programu
+## Program Description
 
-Program działa w trybie konsolowym. Po uruchomieniu wyświetlane jest menu:
+The program works in console mode. After starting, the following menu is displayed:
 
 ```text
 ===== MENU =====
-1. Wprowadz tablice z klawiatury
-2. Wygeneruj tablice
-3. Pokaz aktualna tablice
-4. Posortuj aktualna tablice
-5. Wykonaj testy i zapisz wyniki do pliku
-0. Koniec programu
+1. Enter an array from the keyboard
+2. Generate an array
+3. Show the current array
+4. Sort the current array
+5. Run tests and save results to a file
+0. End program
 ```
 
-Użytkownik może samodzielnie wprowadzić tablicę z klawiatury albo wygenerować ją automatycznie.
+The user can enter an array manually from the keyboard or generate it automatically.
 
-Program umożliwia wygenerowanie czterech typów tablic:
+The program can generate four types of arrays:
 
-1. tablica losowa,
-2. tablica posortowana rosnąco,
-3. tablica posortowana malejąco,
-4. tablica częściowo uporządkowana.
+1. random array,
+2. array sorted in ascending order,
+3. array sorted in descending order,
+4. partially sorted array.
 
-Następnie użytkownik może wybrać metodę sortowania. Po zakończeniu sortowania program wyświetla:
+Then the user can choose the sorting method. After sorting is completed, the program displays:
 
-* tablicę przed sortowaniem,
-* tablicę po sortowaniu,
-* nazwę użytej metody,
-* liczbę porównań,
-* liczbę przestawień.
+* the array before sorting,
+* the array after sorting,
+* the name of the method used,
+* the number of comparisons,
+* the number of swaps.
 
 ---
 
-## Automatyczne testy
+## Automatic Tests
 
-Program posiada opcję wykonania testów automatycznych. Po wybraniu opcji:
+The program has an option to run automatic tests. After choosing the option:
 
 ```text
-5. Wykonaj testy i zapisz wyniki do pliku
+5. Run tests and save results to a file
 ```
 
-program wykonuje sortowania dla tablic o długościach:
+the program performs sorting for arrays of the following lengths:
 
 ```text
 100
@@ -126,16 +117,16 @@ program wykonuje sortowania dla tablic o długościach:
 1000000
 ```
 
-Dla każdej długości generowane są cztery typy tablic:
+For each length, four types of arrays are generated:
 
 ```text
-losowa
-posortowana rosnąco
-posortowana malejąco
-częściowo uporządkowana
+random
+sorted in ascending order
+sorted in descending order
+partially sorted
 ```
 
-Następnie każda tablica jest sortowana czterema metodami:
+Then each array is sorted using four methods:
 
 ```text
 Shaker sort
@@ -144,27 +135,27 @@ Quick sort Hoare
 Heap sort
 ```
 
-Wyniki są zapisywane do pliku:
+The results are saved to the file:
 
 ```text
 wyniki_sortowania.txt
 ```
 
-W pliku wynikowym znajduje się tabela zawierająca:
+The output file contains a table with:
 
-* nazwę metody sortowania,
-* długość tablicy,
-* rodzaj tablicy,
-* liczbę porównań,
-* liczbę przestawień.
+* sorting method name,
+* array length,
+* array type,
+* number of comparisons,
+* number of swaps.
 
-Na końcu pliku dopisane są krótkie wnioski z przeprowadzonych testów.
+At the end of the file, short conclusions from the performed tests are added.
 
 ---
 
-## Liczenie porównań i przestawień
+## Counting Comparisons and Swaps
 
-Do przechowywania wyników została wykorzystana struktura:
+The following structure was used to store the results:
 
 ```cpp
 struct SortStats {
@@ -173,36 +164,36 @@ struct SortStats {
 };
 ```
 
-Pole `comparisons` przechowuje liczbę porównań wykonanych podczas sortowania.
+The `comparisons` field stores the number of comparisons performed during sorting.
 
-Pole `swaps` przechowuje liczbę przestawień elementów.
+The `swaps` field stores the number of element swaps.
 
-Zastosowano typ `long long`, ponieważ przy dużych tablicach liczba operacji może być bardzo duża.
+The `long long` type was used because, for large arrays, the number of operations can be very large.
 
 ---
 
-## Opis zaimplementowanych algorytmów
+## Description of the Implemented Algorithms
 
-### Shaker sort
+### Shaker Sort
 
-`Shaker sort` jest odmianą sortowania bąbelkowego. W zwykłym sortowaniu bąbelkowym tablica jest przeglądana tylko w jednym kierunku. W sortowaniu wahadłowym przejścia wykonywane są w dwóch kierunkach:
+`Shaker sort` is a variation of bubble sort. In regular bubble sort, the array is scanned only in one direction. In bidirectional bubble sort, passes are performed in two directions:
 
-1. od lewej do prawej,
-2. od prawej do lewej.
+1. from left to right,
+2. from right to left.
 
-Podczas przejścia od lewej do prawej największy element przesuwa się na koniec nieposortowanej części tablicy. Podczas przejścia od prawej do lewej najmniejszy element przesuwa się na początek.
+During the left-to-right pass, the largest element moves to the end of the unsorted part of the array. During the right-to-left pass, the smallest element moves to the beginning.
 
-Algorytm działa dobrze dla małych lub prawie posortowanych tablic, ale dla dużych tablic jest mało wydajny.
+The algorithm works well for small or nearly sorted arrays, but it is inefficient for large arrays.
 
-Złożoność czasowa:
+Time complexity:
 
 ```text
-najlepszy przypadek: O(n)
-średni przypadek:    O(n²)
-najgorszy przypadek: O(n²)
+best case:    O(n)
+average case: O(n²)
+worst case:   O(n²)
 ```
 
-Złożoność pamięciowa:
+Memory complexity:
 
 ```text
 O(1)
@@ -210,76 +201,76 @@ O(1)
 
 ---
 
-### Quick sort z podziałem Lomuto
+### Quick Sort with Lomuto Partitioning
 
-Quick sort jest algorytmem typu „dziel i zwyciężaj”. Wariant Lomuto wybiera pivot, a następnie przenosi elementy mniejsze lub równe pivotowi na lewą stronę tablicy. Po zakończeniu podziału pivot znajduje się na swojej właściwej pozycji.
+Quick sort is a divide-and-conquer algorithm. The Lomuto variant chooses a pivot and then moves elements smaller than or equal to the pivot to the left side of the array. After partitioning is complete, the pivot is in its correct position.
 
-W projekcie pivot jest wybierany jako środkowy element zakresu, a następnie przenoszony na koniec, aby można było zastosować schemat Lomuto.
+In the project, the pivot is selected as the middle element of the range and then moved to the end so that the Lomuto scheme can be applied.
 
-Zalety wariantu Lomuto:
+Advantages of the Lomuto variant:
 
-* prosty do zrozumienia,
-* łatwy do zaimplementowania.
+* simple to understand,
+* easy to implement.
 
-Wady:
+Disadvantages:
 
-* może wykonywać więcej przestawień niż wariant Hoare’a.
+* it may perform more swaps than the Hoare variant.
 
-Złożoność czasowa:
+Time complexity:
 
 ```text
-najlepszy przypadek: O(n log n)
-średni przypadek:    O(n log n)
-najgorszy przypadek: O(n²)
+best case:    O(n log n)
+average case: O(n log n)
+worst case:   O(n²)
 ```
 
 ---
 
-### Quick sort z podziałem Hoare’a
+### Quick Sort with Hoare Partitioning
 
-Wariant Hoare’a również wykorzystuje pivot, ale działa inaczej niż Lomuto. Używa dwóch indeksów:
+The Hoare variant also uses a pivot, but works differently from Lomuto. It uses two indices:
 
-* jeden przesuwa się od lewej strony,
-* drugi przesuwa się od prawej strony.
+* one moves from the left side,
+* the other moves from the right side.
 
-Indeksy szukają elementów, które znajdują się po niewłaściwej stronie pivota. Jeżeli takie elementy zostaną znalezione, są zamieniane miejscami.
+The indices search for elements that are on the wrong side of the pivot. If such elements are found, they are swapped.
 
-Wariant Hoare’a zazwyczaj wykonuje mniej przestawień niż wariant Lomuto.
+The Hoare variant usually performs fewer swaps than the Lomuto variant.
 
-Ważna różnica polega na tym, że funkcja podziału Hoare’a nie zwraca dokładnej pozycji pivota, tylko indeks podziału tablicy.
+An important difference is that the Hoare partition function does not return the exact position of the pivot, but the division index of the array.
 
-Złożoność czasowa:
+Time complexity:
 
 ```text
-najlepszy przypadek: O(n log n)
-średni przypadek:    O(n log n)
-najgorszy przypadek: O(n²)
+best case:    O(n log n)
+average case: O(n log n)
+worst case:   O(n²)
 ```
 
 ---
 
-### Heap sort
+### Heap Sort
 
-Heap sort wykorzystuje strukturę kopca. W projekcie zastosowano kopiec maksymalny, w którym największy element znajduje się na początku tablicy.
+Heap sort uses the heap data structure. In this project, a max heap was used, where the largest element is located at the beginning of the array.
 
-Algorytm składa się z dwóch głównych etapów:
+The algorithm consists of two main stages:
 
-1. zbudowanie kopca maksymalnego,
-2. wielokrotne przenoszenie największego elementu na koniec tablicy.
+1. building a max heap,
+2. repeatedly moving the largest element to the end of the array.
 
-Po każdym przeniesieniu największego elementu rozmiar kopca jest zmniejszany, a funkcja `heapify()` przywraca własność kopca.
+After each movement of the largest element, the heap size is reduced, and the `heapify()` function restores the heap property.
 
-Heap sort jest bardzo stabilny pod względem złożoności czasowej, ponieważ w każdym przypadku działa w czasie `O(n log n)`.
+Heap sort is very stable in terms of time complexity because it works in `O(n log n)` time in every case.
 
-Złożoność czasowa:
+Time complexity:
 
 ```text
-najlepszy przypadek: O(n log n)
-średni przypadek:    O(n log n)
-najgorszy przypadek: O(n log n)
+best case:    O(n log n)
+average case: O(n log n)
+worst case:   O(n log n)
 ```
 
-Złożoność pamięciowa:
+Memory complexity:
 
 ```text
 O(1)
@@ -287,19 +278,19 @@ O(1)
 
 ---
 
-## Klasa `cTablica`
+## Class `cTablica`
 
-Klasa `cTablica` odpowiada za przechowywanie tablicy i wykonywanie algorytmów sortowania.
+The `cTablica` class is responsible for storing the array and performing sorting algorithms.
 
-Najważniejsze pole klasy:
+The most important class field is:
 
 ```cpp
 std::vector<int> data;
 ```
 
-Pole `data` przechowuje liczby znajdujące się w tablicy.
+The `data` field stores the numbers contained in the array.
 
-Najważniejsze metody klasy:
+The most important class methods are:
 
 ```cpp
 SortStats shakerSort();
@@ -308,9 +299,9 @@ SortStats quickSortHoare();
 SortStats heapSort();
 ```
 
-Każda metoda sortuje tablicę i zwraca strukturę `SortStats` z liczbą porównań i przestawień.
+Each method sorts the array and returns the `SortStats` structure with the number of comparisons and swaps.
 
-W klasie znajdują się również funkcje pomocnicze:
+The class also contains helper functions:
 
 ```cpp
 void swapElements(int i, int j, SortStats& stats);
@@ -319,28 +310,28 @@ int partitionHoare(int low, int high, SortStats& stats);
 void heapify(int n, int i, SortStats& stats);
 ```
 
-Funkcja `swapElements()` zamienia dwa elementy miejscami i zwiększa licznik przestawień.
+The `swapElements()` function swaps two elements and increases the swap counter.
 
-Funkcje `partitionLomuto()` i `partitionHoare()` odpowiadają za podział tablicy w algorytmie quick sort.
+The `partitionLomuto()` and `partitionHoare()` functions are responsible for partitioning the array in the quick sort algorithm.
 
-Funkcja `heapify()` odpowiada za przywrócenie własności kopca w algorytmie heap sort.
+The `heapify()` function is responsible for restoring the heap property in the heap sort algorithm.
 
 ---
 
-## Klasa `cSortTablicy`
+## Class `cSortTablicy`
 
-Klasa `cSortTablicy` odpowiada za obsługę całego programu od strony użytkownika.
+The `cSortTablicy` class is responsible for handling the whole program from the user side.
 
-Najważniejsze zadania tej klasy:
+The most important tasks of this class are:
 
-* wyświetlanie menu,
-* wczytywanie tablicy z klawiatury,
-* generowanie tablic,
-* wybór metody sortowania,
-* uruchamianie testów,
-* zapis wyników do pliku.
+* displaying the menu,
+* reading an array from the keyboard,
+* generating arrays,
+* choosing the sorting method,
+* running tests,
+* saving results to a file.
 
-Najważniejsze metody klasy:
+The most important methods of the class are:
 
 ```cpp
 void menu();
@@ -350,83 +341,83 @@ void sortCurrentArray();
 void runBenchmark(const std::string& fileName);
 ```
 
-Metoda `menu()` obsługuje główne menu programu.
+The `menu()` method handles the main menu of the program.
 
-Metoda `inputFromKeyboard()` pozwala wprowadzić tablicę ręcznie.
+The `inputFromKeyboard()` method allows the user to enter an array manually.
 
-Metoda `generateFromKeyboard()` generuje tablicę na podstawie wyboru użytkownika.
+The `generateFromKeyboard()` method generates an array based on the user's choice.
 
-Metoda `sortCurrentArray()` sortuje aktualną tablicę wybraną metodą.
+The `sortCurrentArray()` method sorts the current array using the selected method.
 
-Metoda `runBenchmark()` wykonuje testy automatyczne i zapisuje wyniki do pliku.
+The `runBenchmark()` method performs automatic tests and saves the results to a file.
 
 ---
 
-## Obsługa błędów
+## Error Handling
 
-W programie zastosowano obsługę błędów z użyciem wyjątków.
+The program uses exception-based error handling.
 
-Jeżeli użytkownik poda niepoprawną wartość, na przykład tekst zamiast liczby, program zgłasza wyjątek i wyświetla komunikat o błędzie.
+If the user enters an incorrect value, for example text instead of a number, the program throws an exception and displays an error message.
 
-Przykład:
+Example:
 
 ```cpp
-throw std::runtime_error("Podano nieprawidlowa liczbe");
+throw std::runtime_error("Invalid number entered");
 ```
 
-Dzięki temu program nie kończy działania natychmiast po błędzie, tylko wraca do menu i pozwala użytkownikowi kontynuować pracę.
+Thanks to this, the program does not terminate immediately after an error, but returns to the menu and allows the user to continue working.
 
 ---
 
-## Generowanie tablicy częściowo uporządkowanej
+## Generating a Partially Sorted Array
 
-Jednym z typów danych testowych jest tablica częściowo uporządkowana.
+One of the test data types is a partially sorted array.
 
-Program najpierw tworzy tablicę posortowaną rosnąco, a następnie losowo wybiera około 10% indeksów. Wartości na tych indeksach są przestawiane między sobą.
+First, the program creates an array sorted in ascending order, and then it randomly selects about 10% of the indices. The values at these indices are swapped with each other.
 
-Dzięki temu większość tablicy pozostaje uporządkowana, ale część elementów znajduje się na niewłaściwych pozycjach.
+Thanks to this, most of the array remains sorted, but some elements are in incorrect positions.
 
-Pozwala to sprawdzić, jak algorytmy sortowania działają dla danych prawie posortowanych.
+This makes it possible to check how sorting algorithms work for nearly sorted data.
 
 ---
 
-## Ważna informacja o sortowaniu `Shaker sort` dla 1 000 000 elementów
+## Important Information About `Shaker sort` for 1,000,000 Elements
 
-Sortowanie `Shaker sort` ma złożoność `O(n²)`, dlatego dla tablicy zawierającej `1 000 000` elementów może działać bardzo długo.
+`Shaker sort` has time complexity `O(n²)`, so for an array containing `1,000,000` elements, it may run for a very long time.
 
-Z tego powodu w programie dodano pytanie:
+For this reason, the program includes the question:
 
 ```text
-Czy uruchomic Shaker sort dla 1 000 000 elementow? [t/n]
+Run Shaker sort for 1,000,000 elements? [y/n]
 ```
 
-Jeżeli użytkownik wybierze `n`, test zostanie pominięty, a w pliku wynikowym pojawi się informacja:
+If the user chooses `n`, the test will be skipped, and the output file will contain the information:
 
 ```text
-Pominieto
+Skipped
 ```
 
-Jest to rozwiązanie praktyczne, ponieważ uruchamianie algorytmu o złożoności `O(n²)` dla tak dużej liczby elementów może być bardzo czasochłonne.
+This is a practical solution because running an algorithm with `O(n²)` complexity for such a large number of elements can be very time-consuming.
 
 ---
 
-## Kompilacja programu
+## Program Compilation
 
-Program można skompilować za pomocą kompilatora `g++`.
+The program can be compiled using the `g++` compiler.
 
-Przykładowa komenda:
+Example command:
 
 ```bash
 g++ -std=c++17 main.cpp cTablica.cpp cSortTablicy.cpp -o sortowanie
 ```
 
-Uruchomienie programu w systemie Linux lub macOS:
+Running the program on Linux or macOS:
 
 ```bash
 ./sortowanie
 ```
 
-Uruchomienie programu w systemie Windows:
+Running the program on Windows:
 
 ```bash
 sortowanie.exe
@@ -434,56 +425,56 @@ sortowanie.exe
 
 ---
 
-## Przykładowy przebieg działania programu
+## Example Program Run
 
-Po uruchomieniu programu użytkownik może wybrać opcję wygenerowania tablicy. Następnie podaje długość tablicy i wybiera jej typ.
+After starting the program, the user can choose the option to generate an array. Then the user enters the array length and selects its type.
 
-Przykład:
+Example:
 
 ```text
-Podaj dlugosc tablicy: 10
+Enter array length: 10
 
-Rodzaje tablic:
-1. Losowa
-2. Posortowana rosnaco
-3. Posortowana malejaco
-4. Czesciowo uporzadkowana
+Array types:
+1. Random
+2. Sorted in ascending order
+3. Sorted in descending order
+4. Partially sorted
 
-Wybierz rodzaj tablicy: 1
+Choose array type: 1
 ```
 
-Następnie użytkownik może wybrać metodę sortowania:
+Then the user can choose the sorting method:
 
 ```text
-Metody sortowania:
+Sorting methods:
 1. Shaker sort
 2. Quick sort Lomuto
 3. Quick sort Hoare
 4. Heap sort
 
-Wybierz metode sortowania: 4
+Choose sorting method: 4
 ```
 
-Program wyświetli tablicę przed i po sortowaniu oraz statystyki:
+The program will display the array before and after sorting and the statistics:
 
 ```text
-Metoda: Heap sort
-Liczba porownan: ...
-Liczba przestawien: ...
+Method: Heap sort
+Number of comparisons: ...
+Number of swaps: ...
 ```
 
 ---
 
-## Wnioski
+## Conclusions
 
-Na podstawie działania programu można zauważyć, że różne algorytmy sortowania mają różną efektywność w zależności od rodzaju danych wejściowych.
+Based on the program's operation, it can be seen that different sorting algorithms have different efficiency depending on the type of input data.
 
-`Shaker sort` jest prosty do zrozumienia i implementacji, ale dla dużych tablic jest nieefektywny, ponieważ jego złożoność wynosi `O(n²)`.
+`Shaker sort` is simple to understand and implement, but it is inefficient for large arrays because its complexity is `O(n²)`.
 
-`Quick sort` w obu wariantach zwykle działa bardzo szybko, szczególnie dla danych losowych. Wariant Hoare’a zazwyczaj wykonuje mniej przestawień niż wariant Lomuto.
+`Quick sort` in both variants usually works very fast, especially for random data. The Hoare variant usually performs fewer swaps than the Lomuto variant.
 
-`Heap sort` ma gwarantowaną złożoność `O(n log n)` w każdym przypadku, dlatego dobrze nadaje się do sortowania dużych tablic.
+`Heap sort` has guaranteed `O(n log n)` complexity in every case, so it is well suited for sorting large arrays.
 
-Rodzaj danych wejściowych ma duży wpływ na liczbę porównań i przestawień. Tablice losowe, rosnące, malejące i częściowo uporządkowane mogą dawać różne wyniki dla poszczególnych algorytmów.
+The type of input data has a strong influence on the number of comparisons and swaps. Random, ascending, descending, and partially sorted arrays can produce different results for individual algorithms.
 
-Program pozwala porównać te różnice i zapisać wyniki w pliku tekstowym, co ułatwia analizę działania zaimplementowanych metod sortowania.
+The program makes it possible to compare these differences and save the results in a text file, which makes it easier to analyze the behavior of the implemented sorting methods.

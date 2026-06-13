@@ -1,77 +1,77 @@
-# Zadanie: Generator liczb pseudolosowych
+# Task: Pseudorandom Number Generator
 
-## Opis zadania
+## Task Description
 
-Program generuje liczby pseudolosowe za pomocą dwóch metod:
+The program generates pseudorandom numbers using two methods:
 
-1. **Liniowej metody kongruencyjnej — LCG**
-2. **Addytywnej metody kongruencyjnej**
+1. **Linear Congruential Method — LCG**
+2. **Additive Congruential Method**
 
-Użytkownik po uruchomieniu programu wybiera metodę generowania liczb, podaje wymagane dane wejściowe, a następnie program zapisuje wygenerowany ciąg liczb do pliku tekstowego w postaci jednej kolumny.
-
----
-
-## Struktura plików
-
-- `main.cpp` – uruchomienie programu, wybór metody i obsługa danych wejściowych
-- `lcg.h` – deklaracje funkcji związanych z liniową metodą kongruencyjną
-- `lcg.cpp` – definicje funkcji związanych z liniową metodą kongruencyjną
-- `additive.h` – deklaracje funkcji związanych z addytywną metodą kongruencyjną
-- `additive.cpp` – definicje funkcji związanych z addytywną metodą kongruencyjną
-- `utils.h` – deklaracje funkcji pomocniczych
-- `utils.cpp` – definicje funkcji pomocniczych
+After starting the program, the user selects the number generation method, enters the required input data, and then the program saves the generated sequence of numbers to a text file in the form of one column.
 
 ---
 
-## Jak działa program
+## File Structure
 
-### 1. Wybór metody
+* `main.cpp` – starts the program, handles method selection and input data
+* `lcg.h` – declarations of functions related to the linear congruential method
+* `lcg.cpp` – definitions of functions related to the linear congruential method
+* `additive.h` – declarations of functions related to the additive congruential method
+* `additive.cpp` – definitions of functions related to the additive congruential method
+* `utils.h` – declarations of helper functions
+* `utils.cpp` – definitions of helper functions
 
-Po uruchomieniu programu użytkownik wybiera jedną z dwóch metod:
+---
+
+## How the Program Works
+
+### 1. Method Selection
+
+After starting the program, the user chooses one of two methods:
 
 ```text
 1. Linear Congruential Method
 2. Additive Congruential Method
 ```
 
-Dla opcji `1` program uruchamia generator oparty na **liniowej metodzie kongruencyjnej**.
+For option `1`, the program starts a generator based on the **linear congruential method**.
 
-Dla opcji `2` program uruchamia generator oparty na **addytywnej metodzie kongruencyjnej**.
+For option `2`, the program starts a generator based on the **additive congruential method**.
 
 ---
 
-# Liniowa metoda kongruencyjna — LCG
+# Linear Congruential Method — LCG
 
-## Opis metody
+## Method Description
 
-Liniowa metoda kongruencyjna generuje kolejne liczby pseudolosowe na podstawie wzoru:
+The linear congruential method generates consecutive pseudorandom numbers using the formula:
 
 ```text
 X(n+1) = (a * X(n) + c) mod m
 ```
 
-gdzie:
+where:
 
-- `X(n)` – poprzednia liczba pseudolosowa,
-- `X(n+1)` – następna liczba pseudolosowa,
-- `a` – mnożnik,
-- `c` – przyrost,
-- `m` – moduł,
-- `seed` / `x0` – wartość początkowa generatora.
+* `X(n)` – the previous pseudorandom number,
+* `X(n+1)` – the next pseudorandom number,
+* `a` – multiplier,
+* `c` – increment,
+* `m` – modulus,
+* `seed` / `x0` – initial value of the generator.
 
-Generator LCG jest deterministyczny, co oznacza, że dla tych samych wartości `seed`, `a`, `c` i `m` zawsze wygeneruje taki sam ciąg liczb.
+The LCG generator is deterministic, which means that for the same values of `seed`, `a`, `c`, and `m`, it will always generate the same sequence of numbers.
 
 ---
 
-## Dane wejściowe dla LCG
+## Input Data for LCG
 
-Program wczytuje:
+The program reads:
 
-- `n` – liczbę wartości do wygenerowania,
-- `seed` – wartość początkową generatora,
-- `xmax` – maksymalną wartość pseudolosową.
+* `n` – the number of values to generate,
+* `seed` – the initial value of the generator,
+* `xmax` – the maximum pseudorandom value.
 
-Przykład:
+Example:
 
 ```text
 How many numbers do you want to generate?: 6
@@ -79,7 +79,7 @@ Enter seed: 5
 Enter max value: 12
 ```
 
-Dla `xmax = 12` program generuje liczby z przedziału:
+For `xmax = 12`, the program generates numbers from the range:
 
 ```text
 <1, 12>
@@ -87,9 +87,9 @@ Dla `xmax = 12` program generuje liczby z przedziału:
 
 ---
 
-## Założenia dla LCG
+## Assumptions for LCG
 
-Program sprawdza następujące warunki:
+The program checks the following conditions:
 
 ```text
 n >= 0
@@ -99,83 +99,86 @@ m > 0
 0 <= x0 < m
 ```
 
-gdzie:
+where:
 
-- `n` – liczba generowanych wartości,
-- `m` – moduł,
-- `a` – mnożnik,
-- `c` – przyrost,
-- `x0` – wartość początkowa generatora, czyli `seed`.
+* `n` – number of generated values,
+* `m` – modulus,
+* `a` – multiplier,
+* `c` – increment,
+* `x0` – initial generator value, also called `seed`.
 
 ---
 
-## Dobór współczynników LCG
+## Selection of LCG Coefficients
 
-Współczynniki generatora są obliczane automatycznie na podstawie wartości `xmax`.
+The generator coefficients are calculated automatically based on the value of `xmax`.
 
-### Obliczenie `m`
+### Calculating `m`
 
-Funkcja:
+The function:
 
 ```cpp
 int f_lcgCalculateM(int xmax);
 ```
 
-oblicza moduł według wzoru:
+calculates the modulus using the formula:
 
 ```text
 m = xmax + 1
 ```
-Dzięki temu generator wewnętrznie pracuje na wartościach z zakresu:
+
+Thanks to this, the generator internally works on values from the range:
 
 ```text
 0 ... 12
 ```
 
-Ponieważ wynik końcowy ma należeć do przedziału `<1, xmax>`, wartość `0` jest pomijana podczas zapisywania wyników.
+Since the final result should belong to the range `<1, xmax>`, the value `0` is skipped when saving the results.
 
 ---
 
-### Obliczenie `a`
+### Calculating `a`
 
-Funkcja:
+The function:
 
 ```cpp
 int f_lcgCalculateA(int m);
 ```
-odpowiada za wybór mnożnika `a`.
 
-Program sprawdza kolejne wartości `a` z zakresu:
+is responsible for selecting the multiplier `a`.
+
+The program checks consecutive values of `a` from the range:
 
 ```text
 2 <= a < m
 ```
 
-Dla każdej wartości `a` obliczany jest okres `lambda`.
+For each value of `a`, the period `lambda` is calculated.
 
-Okres jest wyznaczany przez funkcję:
+The period is determined by the function:
 
 ```cpp
 int f_lcgFindLambda(int a, int m);
 ```
 
-Funkcja szuka najmniejszej wartości `lambda`, dla której spełniony jest warunek:
+The function searches for the smallest value of `lambda` for which the following condition is satisfied:
 
 ```text
 a^lambda mod m = 1
 ```
-Program wybiera taką wartość `a`, dla której okres `lambda` jest największy.
 
-Jeżeli kilka wartości `a` ma taki sam maksymalny okres, wybierana jest największa wartość `a`.
+The program chooses the value of `a` for which the period `lambda` is the largest.
 
-Przykład dla:
+If several values of `a` have the same maximum period, the largest value of `a` is chosen.
+
+Example for:
 
 ```text
 xmax = 12
 m = 13
 ```
 
-program może wybrać:
+the program may choose:
 
 ```text
 a = 11
@@ -183,130 +186,131 @@ a = 11
 
 ---
 
-### Obliczenie `c`
+### Calculating `c`
 
-Funkcja:
+The function:
 
 ```cpp
 int f_lcgCalculateC(int m);
 ```
-odpowiada za wybór przyrostu `c`.
 
-Program wybiera największą wartość `c`, która spełnia warunek:
+is responsible for selecting the increment `c`.
+
+The program chooses the largest value of `c` that satisfies the condition:
 
 ```text
-NWD(c, m) = 1
+GCD(c, m) = 1
 ```
 
-Do obliczenia największego wspólnego dzielnika używana jest funkcja:
+The greatest common divisor is calculated using the function:
 
 ```cpp
 int f_findGCD(int a, int b);
 ```
 
-Funkcja `f_findGCD` wykorzystuje algorytm Euklidesa.
+The `f_findGCD` function uses the Euclidean algorithm.
 
-Przykład:
+Example:
 
 ```text
 m = 13
 c = 12
 ```
 
-Liczby `12` i `13` są względnie pierwsze, dlatego `c = 12` może zostać użyte jako przyrost.
+The numbers `12` and `13` are relatively prime, so `c = 12` can be used as the increment.
 
 ---
 
-## Funkcja generująca LCG
+## LCG Generating Function
 
-Za wygenerowanie ciągu liczb metodą LCG odpowiada funkcja:
+The function responsible for generating a sequence of numbers using the LCG method is:
 
 ```cpp
 std::vector<int> f_generateLCG(int n, int seed, int xmax);
 ```
 
-Funkcja wykonuje następujące kroki:
+The function performs the following steps:
 
-1. Tworzy pusty wektor na wygenerowane liczby.
-2. Sprawdza poprawność danych wejściowych.
-3. Oblicza współczynniki `m`, `a` i `c`.
-4. Sprawdza, czy `seed`, `a` i `c` znajdują się w poprawnym zakresie.
-5. Ustawia wartość początkową:
+1. Creates an empty vector for the generated numbers.
+2. Checks the correctness of the input data.
+3. Calculates the coefficients `m`, `a`, and `c`.
+4. Checks whether `seed`, `a`, and `c` are in the correct range.
+5. Sets the initial value:
 
 ```text
 x = seed
 ```
 
-6. Generuje kolejne wartości według wzoru:
+6. Generates consecutive values using the formula:
 
 ```text
 x = (a * x + c) mod m
 ```
 
-7. Pomija wartość `0`, aby wynik należał do przedziału `<1, xmax>`.
-8. Dodaje wygenerowane liczby do wektora.
-9. Zwraca wektor z wynikami.
+7. Skips the value `0` so that the result belongs to the range `<1, xmax>`.
+8. Adds the generated numbers to the vector.
+9. Returns the vector with the results.
 
 ---
 
-## Pomocnicza funkcja LCG
+## Helper LCG Function
 
-W programie znajduje się również funkcja:
+The program also contains the function:
 
 ```cpp
 std::vector<int> f_generateLCGRaw(int n, int seed, int m);
 ```
 
-Jest to pomocnicza wersja generatora LCG.
+This is a helper version of the LCG generator.
 
-Różni się od `f_generateLCG` tym, że nie pomija wartości `0`.
+It differs from `f_generateLCG` because it does not skip the value `0`.
 
-Generuje liczby z zakresu:
+It generates numbers from the range:
 
 ```text
 0 <= x < m
 ```
 
-Ta funkcja jest wykorzystywana w addytywnej metodzie kongruencyjnej do utworzenia początkowej tablicy wartości.
+This function is used in the additive congruential method to create the initial table of values.
 
 ---
 
-# Addytywna metoda kongruencyjna
+# Additive Congruential Method
 
-## Opis metody
+## Method Description
 
-Addytywna metoda kongruencyjna generuje liczby na podstawie wcześniej przygotowanej tablicy wartości.
+The additive congruential method generates numbers based on a previously prepared table of values.
 
-Kolejna liczba powstaje przez dodanie dwóch elementów tablicy i wykonanie operacji modulo.
+The next number is created by adding two table elements and performing the modulo operation.
 
-Podstawowy wzór:
+Basic formula:
 
 ```text
 Y[k] = (Y[j] + Y[k]) mod m
 ```
 
-gdzie:
+where:
 
-- `Y` – tablica wartości generatora,
-- `j` – pierwszy indeks,
-- `k` – drugi indeks,
-- `m` – moduł.
+* `Y` – generator value table,
+* `j` – first index,
+* `k` – second index,
+* `m` – modulus.
 
-Po obliczeniu nowej wartości aktualizowana jest komórka `Y[k]`.
+After calculating the new value, the cell `Y[k]` is updated.
 
-Następnie indeksy `j` i `k` są zmniejszane. Jeżeli któryś indeks spadnie poniżej zera, zostaje przeniesiony na koniec tablicy.
+Then the indices `j` and `k` are decreased. If any index drops below zero, it is moved to the end of the table.
 
 ---
 
-## Dane wejściowe dla metody addytywnej
+## Input Data for the Additive Method
 
-Program wczytuje:
+The program reads:
 
-- `n` – liczbę wartości do wygenerowania oraz rozmiar tablicy początkowej,
-- `m` – moduł,
-- `seed` – wartość początkową dla pomocniczego generatora LCG.
+* `n` – the number of values to generate and the size of the initial table,
+* `m` – modulus,
+* `seed` – initial value for the helper LCG generator.
 
-Przykład:
+Example:
 
 ```text
 Enter n: 6
@@ -316,9 +320,9 @@ Enter seed for initial LCG table: 5
 
 ---
 
-## Założenia dla metody addytywnej
+## Assumptions for the Additive Method
 
-Program sprawdza następujące warunki:
+The program checks the following conditions:
 
 ```text
 n > 0
@@ -328,36 +332,36 @@ m > 0
 
 ---
 
-## Wybór pary indeksów `(j, k)`
+## Selecting the Index Pair `(j, k)`
 
-W metodzie addytywnej potrzebna jest para indeksów `(j, k)`.
+In the additive method, a pair of indices `(j, k)` is required.
 
-W przykładzie laboratoryjnym dla:
+In the laboratory example for:
 
 ```text
 n = 6
 m = 8
 ```
 
-wybierana jest para:
+the selected pair is:
 
 ```text
 (2, 5)
 ```
 
-W programie za wybór pary odpowiada funkcja:
+In the program, the function responsible for selecting the pair is:
 
 ```cpp
 std::pair<int, int> choosePair(int n);
 ```
 
-Dla `n = 6` funkcja zwraca:
+For `n = 6`, the function returns:
 
 ```text
 (2, 5)
 ```
 
-Ponieważ w przykładzie z laboratorium tablica jest indeksowana od `1`, a w C++ tablice są indeksowane od `0`, program zamienia indeksy w następujący sposób:
+Since in the laboratory example the table is indexed from `1`, and in C++ arrays are indexed from `0`, the program converts the indices as follows:
 
 ```text
 j = 2 - 1 = 1
@@ -366,25 +370,25 @@ k = 5 - 1 = 4
 
 ---
 
-## Tworzenie tablicy początkowej
+## Creating the Initial Table
 
-Addytywna metoda kongruencyjna wymaga początkowej tablicy wartości.
+The additive congruential method requires an initial table of values.
 
-W programie tablica ta jest generowana za pomocą wcześniej zaimplementowanego generatora LCG.
+In the program, this table is generated using the previously implemented LCG generator.
 
-Odpowiada za to funkcja:
+The function responsible for this is:
 
 ```cpp
 std::vector<int> createInitialTable(int n, int m, int seed);
 ```
 
-Funkcja wywołuje:
+The function calls:
 
 ```cpp
 f_generateLCGRaw(n, seed, m);
 ```
 
-Dzięki temu powstaje tablica początkowa zawierająca wartości z zakresu:
+As a result, an initial table containing values from the range is created:
 
 ```text
 0 <= x < m
@@ -392,24 +396,24 @@ Dzięki temu powstaje tablica początkowa zawierająca wartości z zakresu:
 
 ---
 
-## Odwrócenie tablicy
+## Reversing the Table
 
-Zgodnie z przykładem z laboratorium, po wygenerowaniu tablicy początkowej `X` tworzona jest tablica `Y`, która jest odwróconą wersją tablicy `X`.
+According to the laboratory example, after generating the initial table `X`, a table `Y` is created as the reversed version of table `X`.
 
-Przykład:
+Example:
 
 ```text
 X = [2, 5, 1, 7, 4, 3]
 Y = [3, 4, 7, 1, 5, 2]
 ```
 
-Za odwrócenie tablicy odpowiada funkcja:
+The function responsible for reversing the table is:
 
 ```cpp
 std::vector<int> reverseTable(const std::vector<int>& x);
 ```
 
-W implementacji używana jest funkcja:
+The implementation uses the function:
 
 ```cpp
 std::reverse(y.begin(), y.end());
@@ -417,38 +421,38 @@ std::reverse(y.begin(), y.end());
 
 ---
 
-## Funkcja generująca metodą addytywną
+## Additive Method Generating Function
 
-Za wygenerowanie ciągu liczb metodą addytywną odpowiada funkcja:
+The function responsible for generating a sequence of numbers using the additive method is:
 
 ```cpp
 std::vector<int> f_generateAdditive(int n, int m, int seed);
 ```
 
-Funkcja wykonuje następujące kroki:
+The function performs the following steps:
 
-1. Tworzy pusty wektor na wygenerowane liczby.
-2. Sprawdza poprawność danych wejściowych.
-3. Wybiera parę indeksów `(j, k)`.
-4. Zamienia indeksy z notacji od `1` na indeksy C++ od `0`.
-5. Tworzy początkową tablicę `X` za pomocą LCG.
-6. Odwraca tablicę `X`, tworząc tablicę `Y`.
-7. Generuje kolejne liczby według wzoru:
+1. Creates an empty vector for the generated numbers.
+2. Checks the correctness of the input data.
+3. Selects the index pair `(j, k)`.
+4. Converts the indices from 1-based notation to 0-based C++ indices.
+5. Creates the initial table `X` using LCG.
+6. Reverses table `X`, creating table `Y`.
+7. Generates consecutive numbers using the formula:
 
 ```text
 Y[k] = (Y[j] + Y[k]) mod m
 ```
 
-8. Dodaje wartość `Y[k]` do wektora wynikowego.
-9. Zmniejsza indeksy `j` i `k`.
-10. Jeżeli indeks spadnie poniżej `0`, ustawia go na koniec tablicy.
-11. Zwraca wektor z wygenerowanymi liczbami.
+8. Adds the value `Y[k]` to the result vector.
+9. Decreases the indices `j` and `k`.
+10. If an index drops below `0`, it is set to the end of the table.
+11. Returns the vector with the generated numbers.
 
 ---
 
-## Przykład działania metody addytywnej
+## Example of the Additive Method
 
-Dla danych:
+For the data:
 
 ```text
 n = 6
@@ -456,20 +460,20 @@ m = 8
 pair = (2, 5)
 ```
 
-po zamianie na indeksowanie C++:
+after converting to C++ indexing:
 
 ```text
 j = 1
 k = 4
 ```
 
-Jeżeli tablica `Y` ma postać:
+If table `Y` has the form:
 
 ```text
 Y = [3, 4, 7, 1, 5, 2]
 ```
 
-to pierwszy krok wygląda następująco:
+then the first step looks as follows:
 
 ```text
 Y[k] = (Y[j] + Y[k]) mod m
@@ -478,13 +482,13 @@ Y[4] = (4 + 5) mod 8
 Y[4] = 1
 ```
 
-Po aktualizacji tablica wygląda tak:
+After the update, the table looks like this:
 
 ```text
 Y = [3, 4, 7, 1, 1, 2]
 ```
 
-Następnie indeksy są zmniejszane:
+Then the indices are decreased:
 
 ```text
 j = j - 1
@@ -493,7 +497,7 @@ k = k - 1
 
 ---
 
-# Funkcje pomocnicze
+# Helper Functions
 
 ## `f_findGCD`
 
@@ -501,9 +505,9 @@ k = k - 1
 int f_findGCD(int a, int b);
 ```
 
-Funkcja oblicza największy wspólny dzielnik dwóch liczb za pomocą algorytmu Euklidesa.
+This function calculates the greatest common divisor of two numbers using the Euclidean algorithm.
 
-Jest używana przy wyborze współczynnika `c` w metodzie LCG.
+It is used when selecting the coefficient `c` in the LCG method.
 
 ---
 
@@ -513,21 +517,21 @@ Jest używana przy wyborze współczynnika `c` w metodzie LCG.
 bool f_validateN(int n);
 ```
 
-Funkcja sprawdza poprawność liczby generowanych wartości.
+This function checks whether the number of generated values is correct.
 
-Warunek dla LCG:
+Condition for LCG:
 
 ```text
 n >= 0
 ```
 
-W przypadku metody addytywnej dodatkowo wymagane jest:
+For the additive method, the following is additionally required:
 
 ```text
 n > 0
 ```
 
-ponieważ `n` określa rozmiar tablicy początkowej.
+because `n` determines the size of the initial table.
 
 ---
 
@@ -537,9 +541,9 @@ ponieważ `n` określa rozmiar tablicy początkowej.
 bool f_validateM(int m);
 ```
 
-Funkcja sprawdza poprawność modułu.
+This function checks whether the modulus is valid.
 
-Warunek:
+Condition:
 
 ```text
 m > 0
@@ -553,9 +557,9 @@ m > 0
 bool f_validateValueInRange(int value, int min, int max);
 ```
 
-Funkcja sprawdza, czy dana wartość znajduje się w określonym zakresie.
+This function checks whether a given value is within a specified range.
 
-W programie używana jest między innymi do sprawdzania:
+In the program, it is used, among other things, to check:
 
 ```text
 0 <= seed < m
@@ -571,11 +575,11 @@ W programie używana jest między innymi do sprawdzania:
 void f_saveToFile(const std::vector<int>& numbers, const std::string& filename);
 ```
 
-Funkcja zapisuje wygenerowany ciąg liczb do pliku tekstowego.
+This function saves the generated sequence of numbers to a text file.
 
-Każda liczba zapisywana jest w osobnej linii, czyli w postaci jednej kolumny.
+Each number is saved in a separate line, which means the output is written as one column.
 
-Przykład zawartości pliku:
+Example file content:
 
 ```text
 7
@@ -588,48 +592,48 @@ Przykład zawartości pliku:
 
 ---
 
-# Sposób implementacji
+# Implementation Approach
 
-Program został zaimplementowany modularnie.
+The program was implemented modularly.
 
-Oznacza to, że każda część programu odpowiada za osobny fragment działania:
+This means that each part of the program is responsible for a separate part of its operation:
 
 ```text
-main.cpp       - obsługa menu i komunikacja z użytkownikiem
-lcg.cpp        - implementacja liniowej metody kongruencyjnej
-additive.cpp   - implementacja addytywnej metody kongruencyjnej
-utils.cpp      - funkcje pomocnicze
+main.cpp       - menu handling and communication with the user
+lcg.cpp        - implementation of the linear congruential method
+additive.cpp   - implementation of the additive congruential method
+utils.cpp      - helper functions
 ```
 
-Dzięki temu kod jest bardziej czytelny, łatwiejszy do testowania i prostszy do rozbudowy.
+Thanks to this, the code is more readable, easier to test, and easier to expand.
 
 ---
 
-## Wykorzystanie wektora
+## Use of Vector
 
-Wygenerowane liczby są przechowywane w obiekcie:
+The generated numbers are stored in the object:
 
 ```cpp
 std::vector<int> numbers;
 ```
 
-Każda nowa liczba jest dodawana do wektora za pomocą:
+Each new number is added to the vector using:
 
 ```cpp
 numbers.push_back(value);
 ```
 
-Dzięki temu funkcje generujące liczby nie zapisują ich bezpośrednio do pliku.
+Thanks to this, the functions that generate numbers do not save them directly to a file.
 
-Najpierw zwracają gotowy wektor wyników, a dopiero później funkcja pomocnicza zapisuje ten wektor do pliku.
+First, they return a ready vector of results, and only later does the helper function save this vector to a file.
 
-Takie rozwiązanie oddziela logikę generowania od logiki zapisu danych.
+This solution separates generation logic from data-saving logic.
 
 ---
 
-# Kompilacja
+# Compilation
 
-W katalogu z plikami należy uruchomić:
+Run the following command in the folder containing the files:
 
 ```bash
 g++ main.cpp lcg.cpp additive.cpp utils.cpp -o program.exe
@@ -637,15 +641,15 @@ g++ main.cpp lcg.cpp additive.cpp utils.cpp -o program.exe
 
 ---
 
-# Uruchomienie programu
+# Running the Program
 
-W PowerShell program można uruchomić poleceniem:
+In PowerShell, the program can be started with the command:
 
 ```bash
 .\program.exe
 ```
 
-W terminalu Linux lub Git Bash:
+In a Linux terminal or Git Bash:
 
 ```bash
 ./program.exe
@@ -653,11 +657,11 @@ W terminalu Linux lub Git Bash:
 
 ---
 
-# Przykład użycia
+# Example Usage
 
-## Liniowa metoda kongruencyjna
+## Linear Congruential Method
 
-Przykładowe dane wejściowe:
+Sample input data:
 
 ```text
 Choose generation method:
@@ -673,13 +677,13 @@ Enter max value:
 12
 ```
 
-Program oblicza współczynniki `m`, `a`, `c`, generuje liczby z przedziału:
+The program calculates the coefficients `m`, `a`, and `c`, generates numbers from the range:
 
 ```text
 1 ... 12
 ```
 
-i zapisuje wynik do pliku:
+and saves the result to the file:
 
 ```text
 lcg_numbers.txt
@@ -687,9 +691,9 @@ lcg_numbers.txt
 
 ---
 
-## Addytywna metoda kongruencyjna
+## Additive Congruential Method
 
-Przykładowe dane wejściowe:
+Sample input data:
 
 ```text
 Choose generation method:
@@ -705,9 +709,9 @@ Enter seed for initial LCG table:
 5
 ```
 
-Program tworzy początkową tablicę za pomocą LCG, odwraca ją, wybiera parę `(2, 5)`, a następnie generuje liczby addytywną metodą kongruencyjną.
+The program creates the initial table using LCG, reverses it, selects the pair `(2, 5)`, and then generates numbers using the additive congruential method.
 
-Wynik zostaje zapisany do pliku:
+The result is saved to the file:
 
 ```text
 additive_numbers.txt
@@ -715,24 +719,24 @@ additive_numbers.txt
 
 ---
 
-# Pliki wynikowe
+# Output Files
 
-W zależności od wybranej metody program zapisuje dane do jednego z plików:
+Depending on the selected method, the program saves data to one of the following files:
 
 ```text
 lcg_numbers.txt
 additive_numbers.txt
 ```
 
-Każda liczba znajduje się w osobnej linii.
+Each number is placed in a separate line.
 
 ---
 
-# Podsumowanie
+# Summary
 
-Program realizuje dwa sposoby generowania liczb pseudolosowych:
+The program implements two methods of generating pseudorandom numbers:
 
-1. **Liniowa metoda kongruencyjna**, w której każda kolejna wartość zależy od poprzedniej wartości oraz współczynników `a`, `c` i `m`.
-2. **Addytywna metoda kongruencyjna**, w której kolejne wartości powstają na podstawie dwóch elementów zapisanych w tablicy.
+1. **Linear congruential method**, where each next value depends on the previous value and the coefficients `a`, `c`, and `m`.
+2. **Additive congruential method**, where consecutive values are created based on two elements stored in a table.
 
-Podział programu na osobne pliki pozwala zachować czytelność kodu oraz ułatwia dalszą rozbudowę projektu.
+Dividing the program into separate files helps keep the code readable and makes future project development easier.

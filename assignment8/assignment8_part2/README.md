@@ -1,12 +1,12 @@
-# Problem plecakowy — rozwiązanie rekurencyjne
+# Knapsack Problem — Recursive Solution
 
-## Opis programu
+## Program Description
 
-Program szuka takiego zestawu elementów, którego suma wag jest dokładnie równa pojemności plecaka.
+The program searches for a set of elements whose total weight is exactly equal to the backpack capacity.
 
-Jeżeli program znajdzie rozwiązanie, wypisuje wybrane elementy.
+If the program finds a solution, it prints the selected elements.
 
-Jeżeli rozwiązania nie ma, wypisuje:
+If there is no solution, it prints:
 
 ```text
 BRAK
@@ -14,9 +14,9 @@ BRAK
 
 ---
 
-## Struktura projektu
+## Project Structure
 
-Projekt składa się z plików:
+The project consists of the following files:
 
 ```text
 main.cpp
@@ -28,42 +28,42 @@ InputOutput.cpp
 
 ---
 
-## Jak działa program?
+## How Does the Program Work?
 
-Program dla każdego elementu sprawdza dwie możliwości:
+For each element, the program checks two possibilities:
 
 ```text
-1. wziąć element
-2. pominąć element
+1. take the element
+2. skip the element
 ```
 
-Robi to rekurencyjnie, czyli funkcja wywołuje samą siebie dla kolejnych elementów.
+It does this recursively, which means that the function calls itself for the next elements.
 
-Jeżeli suma wybranych elementów da pojemność plecaka, program kończy szukanie i wypisuje wynik.
+If the sum of the selected elements equals the backpack capacity, the program stops searching and prints the result.
 
 ---
 
-## Opis plików
+## File Description
 
 ### `main.cpp`
 
-To główny plik programu.
+This is the main program file.
 
-Odpowiada za:
+It is responsible for:
 
-- odczytanie liczby testów,
-- odczytanie danych dla każdego testu,
-- uruchomienie algorytmu,
-- wypisanie wyniku,
-- obsługę błędów.
+* reading the number of tests,
+* reading the data for each test,
+* starting the algorithm,
+* printing the result,
+* handling errors.
 
 ---
 
 ### `BackpackSolver.h`
 
-Ten plik zawiera deklarację klasy `BackpackSolver`.
+This file contains the declaration of the `BackpackSolver` class.
 
-W tej klasie są funkcje odpowiedzialne za rozwiązanie problemu plecakowego.
+This class contains functions responsible for solving the knapsack problem.
 
 ```cpp
 findSolution(...)
@@ -74,84 +74,84 @@ solveRecursive(...)
 
 ### `BackpackSolver.cpp`
 
-Ten plik zawiera właściwy algorytm.
+This file contains the actual algorithm.
 
-Funkcja:
+The function:
 
 ```cpp
 findSolution(...)
 ```
 
-przygotowuje dane i uruchamia rekurencję.
+prepares the data and starts the recursion.
 
-Funkcja:
+The function:
 
 ```cpp
 solveRecursive(...)
 ```
 
-sprawdza możliwe kombinacje elementów.
+checks possible combinations of elements.
 
-Najważniejsze warunki:
+The most important conditions are:
 
 ```cpp
 if (remainingCapacity == 0)
     return true;
 ```
 
-Oznacza, że znaleziono poprawne rozwiązanie.
+This means that a correct solution has been found.
 
 ```cpp
 if (remainingCapacity < 0)
     return false;
 ```
 
-Oznacza, że suma elementów jest za duża.
+This means that the sum of the elements is too large.
 
 ```cpp
 if (index >= weights.size())
     return false;
 ```
 
-Oznacza, że skończyły się elementy i nie znaleziono rozwiązania.
+This means that there are no more elements and no solution has been found.
 
 ---
 
 ### `InputOutput.h`
 
-Ten plik zawiera deklaracje funkcji do wczytywania i wypisywania danych.
+This file contains declarations of functions for reading and printing data.
 
 ---
 
 ### `InputOutput.cpp`
 
-Ten plik zawiera funkcje:
+This file contains the functions:
 
 ```cpp
 readInteger(...)
 ```
 
-Odczytuje jedną liczbę.
+Reads one number.
 
 ```cpp
 readWeights(...)
 ```
 
-Odczytuje listę wag elementów.
+Reads the list of element weights.
 
 ```cpp
 printResult(...)
 ```
 
-Wypisuje wynik programu.
+Prints the program result.
 
-Przykład wyniku:
+Example result:
 
 ```text
 20 = 8 7 5
 ```
 
-albo:
+or:
 
 ```text
 BRAK
@@ -159,9 +159,9 @@ BRAK
 
 ---
 
-## Przykład testowy
+## Test Example
 
-### Dane wejściowe
+### Input Data
 
 ```text
 3
@@ -176,7 +176,7 @@ BRAK
 11 7 6 8 5
 ```
 
-### Oczekiwany wynik
+### Expected Output
 
 ```text
 20 = 8 7 5
@@ -186,7 +186,7 @@ BRAK
 
 ---
 
-## Jak skompilować program?
+## How to Compile the Program?
 
 ```bash
 g++ main.cpp BackpackSolver.cpp InputOutput.cpp -o backpack.exe
@@ -195,10 +195,8 @@ backpack.exe
 
 ---
 
-## Podsumowanie
+## Summary
 
-Program używa rekurencji do sprawdzenia różnych kombinacji elementów.
+The program uses recursion to check different combinations of elements.
 
-Dla każdego elementu program decyduje, czy go wziąć, czy pominąć.
-
-
+For each element, the program decides whether to take it or skip it.
