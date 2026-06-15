@@ -1,2 +1,2 @@
 # Programming_Methods_Assignment_Solutions
-Here I want to leave my solutions to assignments I had this semestr on Programming Methods practice lessons 
+This repository contains my solutions to assignments from the Programming Methods course that I completed during my university semester. The course introduced me to many important programming concepts, algorithms, and problem-solving techniques, helping me build a strong foundation in programming. Here you can find all the assignments along with my implementations and solutions. 
